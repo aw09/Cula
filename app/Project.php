@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class member_of_project extends Model
+class Project extends Model
 {
     protected $fillable = [
-        'id_user', 'id_project', 
+        'id', 'name', 'due_date', 
     ];
 }
