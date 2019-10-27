@@ -80,9 +80,9 @@ class CreateCulaDatabase extends Migration
 		});
     Schema::create('USERS', function(Blueprint $table) {
 		    $table->increments('ID_USER');
-		    $table->string('NAME_USERS', 255);
-		    $table->string('EMAIL', 255);
-		    $table->string('USERNAME', 255);
+		    $table->string('NAME_USER', 255);
+		    $table->string('EMAIL', 191)->unique();
+		    $table->string('USERNAME', 191)->unique();
 		    $table->string('PASSWORD', 255);
 
 

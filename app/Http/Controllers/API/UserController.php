@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
+use DB;
 
 class UserController extends Controller
 {
@@ -15,21 +16,35 @@ class UserController extends Controller
     public $successStatus = 200;
 
     public function login(Request $request){
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+      $req = ['email'=>request('email'),'password'=>request('password')];
+      DB::connection()->enableQueryLog();
+      $user = User:;
+      foreach ($user as $key) {
+        return response()->json(['error'=>$key], 401);
+      }
+
+
+        $credentials = Auth::attempt($req);
+        $query = DB::getQueryLog();
+
+        //dd($query);
+        //dd($credentials);
+        if($credentials){
             $user = Auth::user();
             $success['token'] =  $user->createToken('nApp')->accessToken;
             return response()->json(['success' => $success], $this->successStatus);
         }
         else{
-            return response()->json(['error'=>'Unauthorised', 'email'=>$request['header']], 401);
+            return response()->json(['error'=>request('password')], 401);
         }
     }
 
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
+            'name_user' => 'required',
+            'username' => 'required|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
         ]);
@@ -43,11 +58,11 @@ class UserController extends Controller
         $user = User::create($input);
         $success['token'] =  $user->createToken('nApp')->accessToken;
         $success['name'] =  $user->name;
-
-        return response()->json(['success'=>$success], $this->successStatus);
+        return response()->json(['success'=>$success['token']]);
     }
 
     public function changePassword(Request $request){
+
       $user = Auth::user();
       $validator = Validator::make($request->all(), [
           'old_password' => 'required',
@@ -59,8 +74,8 @@ class UserController extends Controller
       }
       $input = $request->all();
       $input['new_password'] = bcrypt($input['new_password']);
-      $credentials = Hash::check('123409', $user['password']);
-      error_log('Some message here.'.$validator->fails());
+      $credentials = Hash::check($input['old_password'], $user['password']);
+      //error_log('Some message here.'.$validator->fails());
       if($credentials){
         $user['password'] = $input['new_password'];
         $user->save();
