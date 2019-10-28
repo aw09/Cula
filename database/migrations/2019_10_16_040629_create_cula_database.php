@@ -13,38 +13,38 @@ class CreateCulaDatabase extends Migration
     public function up()
     {
     Schema::create('PROJECTS', function(Blueprint $table) {
-		    $table->increments('ID_PROJECT');
-		    $table->string('NAME_PROJECT', 255);
-		    $table->date('DUE_DATE_PROJECT');
+		    $table->increments('id');
+		    $table->string('name', 255);
+		    $table->date('due_date');
 
 		    $table->timestamps();
 
 		});
 
 		Schema::create('BOARDS', function(Blueprint $table) {
-		    $table->increments('ID_BOARD');
-		    $table->unsignedInteger('ID_PROJECT');
-		    $table->string('NAME_BOARD', 255);
-        $table->foreign('ID_PROJECT')->references('ID_PROJECT')->on('PROJECTS');
+		    $table->increments('id');
+		    $table->unsignedInteger('id_project');
+		    $table->string('name', 255);
+        $table->foreign('id_project')->references('id')->on('PROJECTS');
 
 		    $table->timestamps();
 
 		});
 
 		Schema::create('CARDS', function(Blueprint $table) {
-		    $table->increments('ID_CARD');
-		    $table->unsignedInteger('ID_BOARD');
-		    $table->string('NAME_CARD', 255);
+		    $table->increments('id');
+		    $table->unsignedInteger('id_board');
+		    $table->string('name', 255);
 
-        $table->foreign('ID_BOARD')->references('ID_BOARD')->on('BOARDS');
+        $table->foreign('id_board')->references('id')->on('BOARDS');
 
 		    $table->timestamps();
 
 		});
 
     Schema::create('USER_ROLES', function(Blueprint $table) {
-		    $table->increments('ID_ROLE');
-		    $table->string('ROLE', 255);
+		    $table->increments('id');
+		    $table->string('role', 255);
 
 
 		    $table->timestamps();
@@ -52,60 +52,71 @@ class CreateCulaDatabase extends Migration
 		});
 
     Schema::create('TASKS', function(Blueprint $table) {
-		    $table->increments('ID_TASK');
-		    $table->unsignedInteger('ID_ROLE');
-		    $table->unsignedInteger('ID_CARD');
-		    $table->string('NAME_TASK', 255);
-		    $table->string('DETAIL_OF_TASK', 255);
-		    $table->date('DUE_DATE_TASK');
-		    $table->date('START_DATE_TASK');
-		    $table->date('FINISH_DATE_TASK');
+		    $table->increments('id');
+		    $table->unsignedInteger('id_role');
+		    $table->unsignedInteger('id_card');
+		    $table->string('task', 255);
+		    $table->string('detail_of_task', 255);
+		    $table->date('due_date');
+		    $table->date('start_date');
+		    $table->date('finish_date');
 
-        $table->foreign('ID_CARD')->references('ID_CARD')->on('CARDS');
-        $table->foreign('ID_ROLE')->references('ID_ROLE')->on('USER_ROLES');
+        $table->foreign('id_card')->references('id')->on('CARDS');
+        $table->foreign('id_role')->references('id')->on('USER_ROLES');
 
 		    $table->timestamps();
 
 		});
 		Schema::create('CHECK_LISTS', function(Blueprint $table) {
-		    $table->increments('ID_CHECK_LIST');
-		    $table->unsignedInteger('ID_TASK');
-		    $table->string('NAME_CHECKLIST', 255);
-		    $table->date('DUE_DATE_CHECKLIST');
+		    $table->increments('id');
+		    $table->unsignedInteger('id_task');
+		    $table->string('check_list', 255);
+		    $table->date('due_date');
 
-        $table->foreign('ID_TASK')->references('ID_TASK')->on('TASKS');
-
-		    $table->timestamps();
-
-		});
-    Schema::create('USERS', function(Blueprint $table) {
-		    $table->increments('ID_USER');
-		    $table->string('NAME_USER', 255);
-		    $table->string('EMAIL', 191)->unique();
-		    $table->string('USERNAME', 191)->unique();
-		    $table->string('PASSWORD', 255);
-
+        $table->foreign('id_task')->references('id')->on('TASKS');
 
 		    $table->timestamps();
 
 		});
+    Schema::create('users', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('name')->nullable();
+        $table->string('email')->unique();
+        $table->timestamp('email_verified_at')->nullable();
+        $table->string('password');
+        $table->rememberToken();
+        $table->timestamps();
+    });
+
+    // Schema::create('USERS', function(Blueprint $table) {
+		//     $table->increments('id');
+		//     $table->string('name', 255);
+		//     $table->string('email', 255);
+		//     $table->string('username', 255);
+		//     $table->string('password', 255);
+    //
+    //
+		//     $table->timestamps();
+    //
+		// });
+
 		Schema::create('COMMENTS', function(Blueprint $table) {
-		    $table->increments('ID_COMMENT');
-		    $table->unsignedInteger('ID_USER');
-		    $table->unsignedInteger('ID_TASK');
-		    $table->longText('COMMENT');
-		    $table->date('DATE');
+		    $table->increments('id');
+		    $table->unsignedInteger('id_user');
+		    $table->unsignedInteger('id_task');
+		    $table->longText('comment');
+		    $table->date('date');
 
-        $table->foreign('ID_USER')->references('ID_USER')->on('USERS');
-        $table->foreign('ID_TASK')->references('ID_TASK')->on('TASKS');
+        $table->foreign('id_user')->references('id')->on('USERS');
+        $table->foreign('id_task')->references('id')->on('TASKS');
 
 		    $table->timestamps();
 
 		});
 
 		Schema::create('CLUSTERS', function(Blueprint $table) {
-		    $table->increments('ID_CLUSTERING');
-		    $table->string('NAME_CLUSTERING', 255);
+		    $table->increments('id');
+		    $table->string('cluster', 255);
 
 
 		    $table->timestamps();
@@ -113,83 +124,83 @@ class CreateCulaDatabase extends Migration
 		});
 
 		Schema::create('CLUSTERINGS', function(Blueprint $table) {
-		    $table->unsignedInteger('ID_CARD');
-		    $table->unsignedInteger('ID_CLUSTERING');
+		    $table->unsignedInteger('id_card');
+		    $table->unsignedInteger('id_cluster');
 
-        $table->foreign('ID_CARD')->references('ID_CARD')->on('CARDS');
-        $table->foreign('ID_CLUSTERING')->references('ID_CLUSTERING')->on('CLUSTERS');
-		    $table->primary('ID_CARD', 'ID_CLUSTERING');
+        $table->foreign('id_card')->references('id')->on('CARDS');
+        $table->foreign('id_cluster')->references('id')->on('CLUSTERS');
+		    $table->primary('id_card', 'id_cluster');
 
 		    $table->timestamps();
 
 		});
 
 		Schema::create('LABELS', function(Blueprint $table) {
-		    $table->increments('ID_LABEL');
-		    $table->unsignedInteger('ID_TASK');
-		    $table->string('COLOR_OF_LABEL', 255);
-		    $table->string('NAME_LABEL', 255);
+		    $table->increments('id');
+		    $table->unsignedInteger('id_task');
+		    $table->string('color_of_label', 255);
+		    $table->string('label', 255);
 
-        $table->foreign('ID_TASK')->references('ID_TASK')->on('TASKS');
+        $table->foreign('id_task')->references('id')->on('TASKS');
 
 		    $table->timestamps();
 
 		});
 
 		Schema::create('LINKS', function(Blueprint $table) {
-		    $table->increments('ID_LINK');
-		    $table->unsignedInteger('ID_TASK');
-		    $table->string('LINK', 255);
+		    $table->increments('id');
+		    $table->unsignedInteger('id_task');
+		    $table->string('link', 255);
 
-        $table->foreign('ID_TASK')->references('ID_TASK')->on('TASKS');
+        $table->foreign('id_task')->references('id')->on('TASKS');
 
 		    $table->timestamps();
 
 		});
 
 		Schema::create('MEMBER_OF_BOARDS', function(Blueprint $table) {
-		    $table->unsignedInteger('ID_BOARD');
-		    $table->unsignedInteger('ID_USER');
+		    $table->unsignedInteger('id_board');
+		    $table->unsignedInteger('id_user');
 
-        $table->foreign('ID_BOARD')->references('ID_BOARD')->on('BOARDS');
-        $table->foreign('ID_USER')->references('ID_USER')->on('USERS');
-		    $table->primary('ID_BOARD', 'ID_USER');
+        $table->foreign('id_board')->references('id')->on('BOARDS');
+        $table->foreign('id_user')->references('id')->on('USERS');
+		    $table->primary('id_board', 'id_user');
 
 		    $table->timestamps();
 
 		});
 
 		Schema::create('MEMBER_OF_CARDS', function(Blueprint $table) {
-		    $table->unsignedInteger('ID_USER');
-		    $table->unsignedInteger('ID_CARD');
+		    $table->unsignedInteger('id_user');
+		    $table->unsignedInteger('id_card');
 
-        $table->foreign('ID_USER')->references('ID_USER')->on('USERS');
-        $table->foreign('ID_CARD')->references('ID_CARD')->on('CARDS');
-		    $table->primary('ID_USER', 'ID_CARD');
+        $table->foreign('id_user')->references('id')->on('USERS');
+        $table->foreign('id_card')->references('id')->on('CARDS');
+		    $table->primary('id_user', 'id_card');
 
 		    $table->timestamps();
 
 		});
 
 		Schema::create('MEMBER_OF_PROJECTS', function(Blueprint $table) {
-		    $table->unsignedInteger('ID_USER');
-		    $table->unsignedInteger('ID_PROJECT');
+		    $table->unsignedInteger('id_user');
+		    $table->unsignedInteger('id_project');
 
-        $table->foreign('ID_USER')->references('ID_USER')->on('USERS');
-        $table->foreign('ID_PROJECT')->references('ID_PROJECT')->on('PROJECTS');
-		    $table->primary('ID_USER', 'ID_PROJECT');
+        $table->foreign('id_user')->references('id')->on('USERS');
+        $table->foreign('id_project')->references('id')->on('PROJECTS');
+		    $table->primary('id_user', 'id_project');
 
 		    $table->timestamps();
 
 		});
 
 		Schema::create('MEMBER_OF_TASKS', function(Blueprint $table) {
-		    $table->unsignedInteger('ID_USER');
-		    $table->unsignedInteger('ID_TASK');
+		    $table->unsignedInteger('id_user');
+		    $table->unsignedInteger('id_task');
 
-        $table->foreign('ID_USER')->references('ID_USER')->on('USERS');
-        $table->foreign('ID_TASK')->references('ID_TASK')->on('TASKS');
-		    $table->primary('ID_USER', 'ID_TASK');
+        $table->foreign('id_user')->references('id')->on('USERS');
+        $table->foreign('id_task')->references('id')->on('TASKS');
+		    $table->primary('id_user', 'id_task');
 
 		    $table->timestamps();
 
