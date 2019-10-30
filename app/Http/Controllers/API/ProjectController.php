@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Project;
+use Illuminate\Support\Facades\Auth;
 use App\member_of_project;
 use App\Http\Controllers\Controller;
 use Validator;
@@ -14,6 +15,7 @@ class ProjectController extends Controller
     public $successStatus = 200;
 
     public function store(Request $request){
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'name' => 'required',
         ]);
@@ -24,6 +26,11 @@ class ProjectController extends Controller
 
         $input = $request->all();
         $project = Project::create($input);
+        $req['id_user'] = $user->id;
+        $req['id_project'] = $project->id;
+        $req = new Request($req);
+        $this->addMember($req);
+
         $success['name'] =  $project->name;
 
         return response()->json(['success'=>$success], $this->successStatus);

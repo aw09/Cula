@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $fillable = [
-        'id', 'name', 'due_date',
+        'name', 'due_date',
     ];
     function user(){
   		return $this->hasMany('App\member_of_project','id_project');
