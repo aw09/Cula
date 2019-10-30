@@ -35,7 +35,6 @@ class ProjectController extends Controller
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
-    public function destroy(Project $id){
         $project->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
