@@ -5,9 +5,12 @@ namespace App\Http\Controllers\API;
 
 use App\Cards;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Validator;
 
 class CardsController extends Controller
 {
+    public $successStatus = 200;
     /**
      * Display a listing of the resource.
      *
@@ -37,6 +40,20 @@ class CardsController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(),[
+            'id_board' => 'required',
+            'name' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
+
+        $input = $request->all();
+        $board = Cards::create($input);
+        $success['name'] =  $board->name;
+
+        return response()->json(['success'=>$success], $this->successStatus);
     }
 
     /**
@@ -71,6 +88,18 @@ class CardsController extends Controller
     public function update(Request $request, Cards $cards)
     {
         //
+        $validator = Validator::make($request->all(),[
+            'id' => 'required',
+            'name' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
+
+        $card->update($request->all());
+        $success =  $card;
+        return response()->json(['success'=>$success], $this->successStatus);
     }
 
     /**
@@ -82,5 +111,7 @@ class CardsController extends Controller
     public function destroy(Cards $cards)
     {
         //
+        $cards->delete();
+        return response()->json(['success'=>'Success'], $this->successStatus);
     }
 }
