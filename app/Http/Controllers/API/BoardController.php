@@ -15,7 +15,6 @@ class BoardController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'id_project' => 'required',
-            'name_board' => 'required',
             'name' => 'required',
         ]);
 
