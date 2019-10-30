@@ -24,7 +24,6 @@ class BoardController extends Controller
 
         $input = $request->all();
         $board = Board::create($input);
-        $success['name_board'] =  $board->name_board;
         $success['name'] =  $board->name;
 
         return response()->json(['success'=>$success], $this->successStatus);
