@@ -30,11 +30,21 @@ class ProjectController extends Controller
     }
 
     public function update(Request $request, Project $project){
+        $validator = Validator::make($request->all(),[
+            'id' => 'required',
+            'name' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
         $project->update($request->all());
         $success =  $project;
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
+    public function destroy(Project $project){
         $project->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
