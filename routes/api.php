@@ -34,5 +34,5 @@ Route::put('delete-card/{board}', 'API\CardsController@destroy');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'API\UserController@details');
-    Route::post('changePassword', 'API\UserController@changePassword');
+    Route::post('change-password', 'API\UserController@changePassword');
 });
