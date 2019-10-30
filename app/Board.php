@@ -8,5 +8,6 @@ class Board extends Model
 {
     protected $fillable = [
         'id_board', 'id_project', 'name_board', 
+        'id', 'id_project', 'name', 
     ];
 }
