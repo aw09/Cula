@@ -43,4 +43,5 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add-member-project', 'API\ProjectController@addMember');
     Route::put('update-project/{project}', 'API\ProjectController@update');
     Route::put('delete-project/{project}', 'API\ProjectController@destroy');
+    Route::post('get-member-project', 'API\ProjectController@getMember');
 });
