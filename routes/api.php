@@ -27,6 +27,10 @@ Route::post('create-board', 'API\BoardController@store');
 Route::post('add-member-board', 'API\BoardController@addMember');
 Route::put('update-board/{board}', 'API\BoardController@update');
 Route::put('delete-board/{board}', 'API\BoardController@destroy');
+Route::post('create-card', 'API\CardsController@store');
+Route::post('add-member-card', 'API\CardsController@addMember');
+Route::put('update-card/{board}', 'API\CardsController@update');
+Route::put('delete-card/{board}', 'API\CardsController@destroy');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('details', 'API\UserController@details');
