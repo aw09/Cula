@@ -36,8 +36,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    // public function getAuthPassword()
-    // {
-    //     return $this->PASSWORD;
-    // }
+
+    public function task()
+    {
+        return $this->hasMany('App\member_of_task', 'id_user');
+    }
+    public function card()
+    {
+        return $this->hasMany('App\member_of_card', 'id_user');
+    }
+    public function board()
+    {
+        return $this->hasMany('App\member_of_board', 'id_user');
+    }
+    public function project()
+    {
+        return $this->hasMany('App\member_of_project', 'id_user');
+    }
+    public function comment()
+    {
+        return $this->hasMany('App\Comment', 'id_user');
+    }
 }

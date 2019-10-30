@@ -19,14 +19,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 Route::get('token', 'API\UserController@getToken');
+
+Route::post('create-task', 'API\TaskController@store');
+Route::post('add-member-task', 'API\TaskController@addMember');
+Route::put('update-task/{task}', 'API\TaskController@update');
+Route::put('delete-task/{task}', 'API\TaskController@destroy');
+
 Route::post('create-project', 'API\ProjectController@store');
 Route::post('add-member-project', 'API\ProjectController@addMember');
 Route::put('update-project/{project}', 'API\ProjectController@update');
 Route::put('delete-project/{project}', 'API\ProjectController@destroy');
+
 Route::post('create-board', 'API\BoardController@store');
 Route::post('add-member-board', 'API\BoardController@addMember');
 Route::put('update-board/{board}', 'API\BoardController@update');
 Route::put('delete-board/{board}', 'API\BoardController@destroy');
+
 Route::post('create-card', 'API\CardsController@store');
 Route::post('add-member-card', 'API\CardsController@addMember');
 Route::put('update-card/{board}', 'API\CardsController@update');

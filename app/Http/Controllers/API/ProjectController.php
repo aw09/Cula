@@ -20,7 +20,6 @@ class ProjectController extends Controller
 
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()], 401);
-
         }
 
         $input = $request->all();
@@ -37,7 +36,7 @@ class ProjectController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>'error']);
+            return response()->json(['error'=>$validator->errors()], 401);
         }
 
         $project->update($request->all());
@@ -57,7 +56,7 @@ class ProjectController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>'error']);
+            return response()->json(['error'=>$validator->errors()], 401);
         }
 
         $input = $request->all();

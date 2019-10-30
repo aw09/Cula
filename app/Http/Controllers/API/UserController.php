@@ -1,19 +1,14 @@
 <?php
-
 namespace App\Http\Controllers\API;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
-
 class UserController extends Controller
 {
-
     public $successStatus = 200;
-
     public function login(Request $request){
         if(Auth::attempt(['email'=>request('email'),'password'=>request('password')])){
             $user = Auth::user();
@@ -24,7 +19,6 @@ class UserController extends Controller
             return response()->json(['error'=>request('password')], 401);
         }
     }
-
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -34,11 +28,9 @@ class UserController extends Controller
             'password' => 'required',
             'confirm_password' => 'required|same:password',
         ]);
-
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);
         }
-
         $input = $request->all();
         // dd($input);
         $input['password'] = bcrypt($input['password']);
@@ -47,9 +39,7 @@ class UserController extends Controller
         $success['name'] =  $user->name;
         return response()->json(['success'=>$success['token']]);
     }
-
     public function changePassword(Request $request){
-
       $user = Auth::user();
       $validator = Validator::make($request->all(), [
           'old_password' => 'required',
@@ -71,11 +61,7 @@ class UserController extends Controller
       else {
         return response()->json(['error'=>'Unauthorised']);
       }
-
-
     }
-
-
     public function details()
     {
         $user = Auth::user();
