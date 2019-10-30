@@ -80,7 +80,7 @@ class BoardController extends Controller
 
     public function addMember(Request $request){
         $validator = Validator::make($request->all(),[
-            'id_user' => 'required',
+            'id' => 'required',
             'id_board' => 'required',
         ]);
 
