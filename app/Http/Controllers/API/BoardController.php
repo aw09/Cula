@@ -16,15 +16,18 @@ class BoardController extends Controller
         $validator = Validator::make($request->all(),[
             'id_project' => 'required',
             'name_board' => 'required',
+            'name' => 'required',
         ]);
 
         if($validator->fails()){
             return response()->json(['error'=>'error']);
+            return response()->json(['error'=>$validator->errors()], 401);
         }
 
         $input = $request->all();
         $board = Board::create($input);
         $success['name_board'] =  $board->name_board;
+        $success['name'] =  $board->name;
 
         return response()->json(['success'=>$success], $this->successStatus);
     }
