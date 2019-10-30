@@ -60,7 +60,7 @@ class TaskController extends Controller
   public function update(Request $request, Task $task)
   {
       $task->update($request->all());
-      $success =  task;
+      $success =  $task;
       return response()->json(['success'=>$success], $this->successStatus);
   }
 

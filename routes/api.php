@@ -36,12 +36,13 @@ Route::put('update-card/{board}', 'API\CardsController@update');
 Route::put('delete-card/{board}', 'API\CardsController@destroy');
 
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::post('details', 'API\UserController@details');
     Route::post('change-password', 'API\UserController@changePassword');
+    Route::get('get-project-user', 'API\UserController@getProject');
 
     Route::post('create-project', 'API\ProjectController@store');
     Route::post('add-member-project', 'API\ProjectController@addMember');
     Route::put('update-project/{project}', 'API\ProjectController@update');
     Route::put('delete-project/{project}', 'API\ProjectController@destroy');
     Route::post('get-member-project', 'API\ProjectController@getMember');
+
 });
