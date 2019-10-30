@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Cards;
+use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 
-class CardsController extends Controller
+class CommentController extends Controller
 {
-    public $successStatus = 200;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public $successStatus = 200;
     public function index()
     {
-        $card = Cards::all();
-        return response()->json(['success'=>$card], $this->successStatus);
+        $comment = Comment::all();
+        return response()->json(['success'=>$comment], $this->successStatus);
     }
 
     /**
@@ -40,17 +40,19 @@ class CardsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'id_board' => 'required',
-            'name' => 'required',
+            'id_user' => 'required',
+            'id_task' => 'required',
+            'comment' => 'required',
         ]);
 
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()], 401);
+
         }
 
         $input = $request->all();
-        $board = Cards::create($input);
-        $success['name'] =  $board->name;
+        $comment = Comment::create($input);
+        $success =  $comment;
 
         return response()->json(['success'=>$success], $this->successStatus);
     }
@@ -58,57 +60,58 @@ class CardsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Cards $cards)
+    public function show(comment $comment)
     {
-        return response()->json(['success'=>$cards], $this->successStatus);
+        return response()->json(['success'=>$comment], $this->successStatus);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cards $cards)
+    public function edit(comment $comment)
     {
-        
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cards  $cards
+     * @param  \App\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cards $cards)
+    public function update(Request $request, comment $comment)
     {
         $validator = Validator::make($request->all(),[
-            'id' => 'required',
-            'name' => 'required',
+            'id_user' => 'required',
+            'id_task' => 'required',
+            'comment' => 'required',
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json(['error'=>'error']);
         }
 
-        $card->update($request->all());
-        $success =  $card;
+        $comment->update($request->all());
+        $success =  $comment;
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cards $cards)
+    public function destroy(comment $comment)
     {
-        $cards->delete();
+        $comment->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 }

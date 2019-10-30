@@ -54,7 +54,8 @@ class CreateCulaDatabase extends Migration
     Schema::create('TASKS', function(Blueprint $table) {
 		    $table->increments('id');
 		    $table->unsignedInteger('id_role');
-		    $table->unsignedInteger('id_card');
+			$table->unsignedInteger('id_card');
+			$table->unsignedInteger('id_label');
 		    $table->string('task', 255);
 		    $table->string('detail_of_task', 255);
 		    $table->date('due_date');
@@ -62,7 +63,8 @@ class CreateCulaDatabase extends Migration
 		    $table->date('finish_date');
 
         $table->foreign('id_card')->references('id')->on('CARDS');
-        $table->foreign('id_role')->references('id')->on('USER_ROLES');
+		$table->foreign('id_role')->references('id')->on('USER_ROLES');
+		$table->foreign('id_label')->references('id')->on('LABELS');
 
 		    $table->timestamps();
 
@@ -137,11 +139,8 @@ class CreateCulaDatabase extends Migration
 
 		Schema::create('LABELS', function(Blueprint $table) {
 		    $table->increments('id');
-		    $table->unsignedInteger('id_task');
 		    $table->string('color_of_label', 255);
 		    $table->string('label', 255);
-
-        $table->foreign('id_task')->references('id')->on('TASKS');
 
 		    $table->timestamps();
 

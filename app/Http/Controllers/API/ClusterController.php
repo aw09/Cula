@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Cards;
+use App\Cluster;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 
-class CardsController extends Controller
+class ClusterController extends Controller
 {
-    public $successStatus = 200;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public $successStatus = 200;
     public function index()
     {
-        $card = Cards::all();
-        return response()->json(['success'=>$card], $this->successStatus);
+        $cluster = Cluster::all();
+        return response()->json(['success'=>$cluster], $this->successStatus);
     }
 
     /**
@@ -40,17 +40,17 @@ class CardsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'id_board' => 'required',
-            'name' => 'required',
+            'cluster' => 'required',
         ]);
 
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()], 401);
+
         }
 
         $input = $request->all();
-        $board = Cards::create($input);
-        $success['name'] =  $board->name;
+        $cluster = Cluster::create($input);
+        $success =  $cluster;
 
         return response()->json(['success'=>$success], $this->successStatus);
     }
@@ -58,57 +58,56 @@ class CardsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\cluster  $cluster
      * @return \Illuminate\Http\Response
      */
-    public function show(Cards $cards)
+    public function show(cluster $cluster)
     {
-        return response()->json(['success'=>$cards], $this->successStatus);
+        return response()->json(['success'=>$cluster], $this->successStatus);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\cluster  $cluster
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cards $cards)
+    public function edit(cluster $cluster)
     {
-        
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cards  $cards
+     * @param  \App\cluster  $cluster
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cards $cards)
+    public function update(Request $request, cluster $cluster)
     {
         $validator = Validator::make($request->all(),[
-            'id' => 'required',
-            'name' => 'required',
+            'cluster' => 'required',
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json(['error'=>'error']);
         }
 
-        $card->update($request->all());
-        $success =  $card;
+        $cluster->update($request->all());
+        $success =  $cluster;
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\cluster  $cluster
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cards $cards)
+    public function destroy(cluster $cluster)
     {
-        $cards->delete();
+        $cluster->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 }

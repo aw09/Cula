@@ -11,6 +11,13 @@ use Validator;
 class BoardController extends Controller
 {
     public $successStatus = 200;
+
+    public function index()
+    {
+        $board = Board::all();
+        return response()->json(['success'=>$board], $this->successStatus);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -37,7 +44,7 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        //
+        return response()->json(['success'=>$board], $this->successStatus);
     }
 
     /**

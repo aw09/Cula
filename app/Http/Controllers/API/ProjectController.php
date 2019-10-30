@@ -13,14 +13,19 @@ class ProjectController extends Controller
 {
     public $successStatus = 200;
 
+    public function index()
+    {
+        $project = Project::all();
+        return response()->json(['success'=>$project], $this->successStatus);
+    }
+
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
             'name' => 'required',
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
-
+            return response()->json(['error'=>'error']);
         }
 
         $input = $request->all();
@@ -28,6 +33,11 @@ class ProjectController extends Controller
         $success['name'] =  $project->name;
 
         return response()->json(['success'=>$success], $this->successStatus);
+    }
+
+    public function show(Project $project)
+    {
+        return response()->json(['success'=>$project], $this->successStatus);
     }
 
     public function update(Request $request, Project $project){

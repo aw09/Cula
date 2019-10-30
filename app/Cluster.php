@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Link extends Model
+class Cluster extends Model
 {
     protected $fillable = [
-        'id', 'id_task', 'link'
+        'id', 'cluster',
     ];
 }

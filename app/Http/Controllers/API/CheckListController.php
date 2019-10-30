@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Cards;
+use App\CheckList;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 
-class CardsController extends Controller
+class CheckListController extends Controller
 {
-    public $successStatus = 200;
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +16,8 @@ class CardsController extends Controller
      */
     public function index()
     {
-        $card = Cards::all();
-        return response()->json(['success'=>$card], $this->successStatus);
+        $checkList = CheckList::all();
+        return response()->json(['success'=>$checkList], $this->successStatus);
     }
 
     /**
@@ -28,7 +27,7 @@ class CardsController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -40,17 +39,18 @@ class CardsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'id_board' => 'required',
-            'name' => 'required',
+            'id_task' => 'required',
+            'check_list' => 'required',
         ]);
 
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()], 401);
+
         }
 
         $input = $request->all();
-        $board = Cards::create($input);
-        $success['name'] =  $board->name;
+        $checkList = CheckList::create($input);
+        $success['name'] =  $checkList->check_list;
 
         return response()->json(['success'=>$success], $this->successStatus);
     }
@@ -58,57 +58,57 @@ class CardsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\CheckList  $checkList
      * @return \Illuminate\Http\Response
      */
-    public function show(Cards $cards)
+    public function show(CheckList $checkList)
     {
-        return response()->json(['success'=>$cards], $this->successStatus);
+        return response()->json(['success'=>$checkList], $this->successStatus);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\CheckList  $checkList
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cards $cards)
+    public function edit(CheckList $checkList)
     {
-        
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cards  $cards
+     * @param  \App\CheckList  $checkList
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cards $cards)
+    public function update(Request $request, CheckList $checkList)
     {
         $validator = Validator::make($request->all(),[
-            'id' => 'required',
+            'id_task' => 'required',
             'name' => 'required',
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json(['error'=>'error']);
         }
 
-        $card->update($request->all());
-        $success =  $card;
+        $checkList->update($request->all());
+        $success =  $checkList;
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\CheckList  $checkList
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cards $cards)
+    public function destroy(CheckList $checkList)
     {
-        $cards->delete();
+        $checkList->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 }

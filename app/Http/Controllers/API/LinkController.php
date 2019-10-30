@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Cards;
 use Illuminate\Http\Request;
+use App\Link;
 use App\Http\Controllers\Controller;
 use Validator;
 
-class CardsController extends Controller
+class LinkController extends Controller
 {
-    public $successStatus = 200;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public $successStatus = 200;
     public function index()
     {
-        $card = Cards::all();
-        return response()->json(['success'=>$card], $this->successStatus);
+        $link = Link::all();
+        return response()->json(['success'=>$link], $this->successStatus);
     }
 
     /**
@@ -40,17 +40,17 @@ class CardsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'id_board' => 'required',
-            'name' => 'required',
+            'id_task' => 'required',
+            'link' => 'requires',
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json(['error'=>'error']);
         }
 
         $input = $request->all();
-        $board = Cards::create($input);
-        $success['name'] =  $board->name;
+        $link = Link::create($input);
+        $success =  $link;
 
         return response()->json(['success'=>$success], $this->successStatus);
     }
@@ -58,57 +58,57 @@ class CardsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Cards $cards)
+    public function show(Link $link)
     {
-        return response()->json(['success'=>$cards], $this->successStatus);
+        return response()->json(['success'=>$link], $this->successStatus);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cards $cards)
+    public function edit($id)
     {
-        
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cards  $cards
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cards $cards)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(),[
-            'id' => 'required',
-            'name' => 'required',
+            'id_task' => 'required',
+            'link' => 'required',
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json(['error'=>'error']);
         }
 
-        $card->update($request->all());
-        $success =  $card;
+        $link->update($request->all());
+        $success =  $link;
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cards  $cards
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cards $cards)
+    public function destroy(Link $link)
     {
-        $cards->delete();
+        $project->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 }
