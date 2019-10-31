@@ -4,9 +4,10 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Project;
 use Illuminate\Support\Facades\Auth;
+use App\Project;
 use App\member_of_project;
+use App\User;
 use App\Http\Controllers\Controller;
 use Validator;
 
@@ -92,7 +93,12 @@ class ProjectController extends Controller
           return response()->json(['error'=>$validator->errors()], 401);
       }
       $project = Project::find($request->id_project);
-      $member = $project->user;
+      $mop = $project->user;
+
+      foreach ($mop as $key) {
+        $user_project = User::find($key->id_user);
+        $member[$user_project->id] = ['name'=>$user_project->name];
+      }
 
       return response()->json([$project->id=>$member], $this->successStatus);
     }
