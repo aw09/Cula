@@ -86,7 +86,7 @@ class ProjectController extends Controller
     public function getMember(Request $request){
       $user = Auth::user();
       $validator = Validator::make($request->all(),[
-          'id_project' => 'required'
+          'id' => 'required'
       ]);
       if($validator->fails()){
           return response()->json(['error'=>$validator->errors()], 401);

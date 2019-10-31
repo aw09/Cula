@@ -9,4 +9,8 @@ class Link extends Model
     protected $fillable = [
         'id', 'id_task', 'link'
     ];
+
+    function link(){
+        return $this->belongTo('App\task', 'id_task');
+      }
 }

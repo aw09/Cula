@@ -9,7 +9,16 @@ class Board extends Model
     protected $fillable = [
         'id', 'id_project', 'name', 
     ];
+
     function user(){
   		return $this->hasMany('App\member_of_board','id_board');
-  	}
+      }
+      
+    function project(){
+        return $this->belongTo('App\Project', 'id_project');
+    }
+
+    function card(){
+        return $this->hasMany('App\Cards', 'id_card');
+    }
 }
