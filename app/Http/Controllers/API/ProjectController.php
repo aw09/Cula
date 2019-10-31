@@ -49,6 +49,8 @@ class ProjectController extends Controller
     }
 
     public function update(Request $request, Project $project){
+        $user = Auth::user();
+
         $validator = Validator::make($request->all(),[
             'id' => 'required',
             'name' => 'required',
@@ -64,14 +66,17 @@ class ProjectController extends Controller
     }
 
     public function destroy(Project $project){
+        $user = Auth::user();
+
         $project->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 
     public function addMember(Request $request){
+      $user = Auth::user();
         $validator = Validator::make($request->all(),[
-            'id_user' => 'required',
-            'id_project' => 'required',
+            'id_user' => "required",
+            'id_project' => 'required|unique:member_of_projects,id_project,NULL,NULL,id_user,'.$user->id,
         ]);
 
         if($validator->fails()){
