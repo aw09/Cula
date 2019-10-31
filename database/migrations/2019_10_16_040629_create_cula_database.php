@@ -15,7 +15,7 @@ class CreateCulaDatabase extends Migration
     Schema::create('PROJECTS', function(Blueprint $table) {
 		    $table->increments('id');
 		    $table->string('name', 255);
-		    $table->date('due_date');
+		    $table->date('due_date')->nullable();
 
 		    $table->timestamps();
 
@@ -58,9 +58,9 @@ class CreateCulaDatabase extends Migration
 			$table->unsignedInteger('id_label');
 		    $table->string('task', 255);
 		    $table->string('detail_of_task', 255);
-		    $table->date('due_date');
-		    $table->date('start_date');
-		    $table->date('finish_date');
+		    $table->date('due_date')->nullable();
+		    $table->date('start_date')->nullable();
+		    $table->date('finish_date')->nullable();
 
         $table->foreign('id_card')->references('id')->on('CARDS');
 		$table->foreign('id_role')->references('id')->on('USER_ROLES');
@@ -163,7 +163,6 @@ class CreateCulaDatabase extends Migration
 
         $table->foreign('id_board')->references('id')->on('BOARDS');
         $table->foreign('id_user')->references('id')->on('USERS');
-		    $table->primary('id_board', 'id_user');
 
 		    $table->timestamps();
 
@@ -175,7 +174,6 @@ class CreateCulaDatabase extends Migration
 
         $table->foreign('id_user')->references('id')->on('USERS');
         $table->foreign('id_card')->references('id')->on('CARDS');
-		    $table->primary('id_user', 'id_card');
 
 		    $table->timestamps();
 
@@ -187,7 +185,6 @@ class CreateCulaDatabase extends Migration
 
         $table->foreign('id_user')->references('id')->on('USERS');
         $table->foreign('id_project')->references('id')->on('PROJECTS');
-		    $table->primary('id_user', 'id_project');
 
 		    $table->timestamps();
 
@@ -199,7 +196,6 @@ class CreateCulaDatabase extends Migration
 
         $table->foreign('id_user')->references('id')->on('USERS');
         $table->foreign('id_task')->references('id')->on('TASKS');
-		    $table->primary('id_user', 'id_task');
 
 		    $table->timestamps();
 

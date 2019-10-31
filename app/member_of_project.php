@@ -12,15 +12,15 @@ class member_of_project extends Model
    * @var array
    */
   protected $fillable = [
-      'ID_USER', 'ID_PROJECT'
+      'id_user', 'id_project'
   ];
 
   public function project()
   {
-      return $this->belongsto('App\Project');
+      return $this->belongsto('App\Project', 'id_project');
   }
-  // public function user()
-  // {
-  //     return $this->belongsto('App\User');
-  // }
+  public function user()
+  {
+      return $this->belongsto('App\User', 'id_user');
+  }
 }
