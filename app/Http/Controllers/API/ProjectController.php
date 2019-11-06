@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Project;
+use Illuminate\Support\Facades\Auth;
+use App\member_of_project;
 use App\Http\Controllers\Controller;
 use Validator;
 
@@ -67,6 +69,8 @@ class ProjectController extends Controller
 
     public function addMember(Request $request){
         $validator = Validator::make($request->all(),[
+            'id_user' => 'required',
+            'id_project' => 'required',
         ]);
 
         if($validator->fails()){
@@ -82,13 +86,29 @@ class ProjectController extends Controller
     public function getMember(Request $request){
       $user = Auth::user();
       $validator = Validator::make($request->all(),[
+          'id_project' => 'required'
       ]);
       if($validator->fails()){
           return response()->json(['error'=>$validator->errors()], 401);
       }
       $project = Project::find($request->id_project);
+      $member = $project->user;
 
       return response()->json([$project->id=>$member], $this->successStatus);
+    }
+
+    public function myProject(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id_user' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
+
+        $project = member_of_project::find($request->id_user);
+        $listProject = $project->project;
+
+        return response()->json([$project->id=>$listProject], $this->successStatus); 
     }
 
 

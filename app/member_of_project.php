@@ -19,6 +19,7 @@ class member_of_project extends Model
   {
       return $this->belongsto('App\Project', 'id_project');
   }
+  
   public function user()
   {
       return $this->belongsto('App\User', 'id_user');

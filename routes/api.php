@@ -20,6 +20,7 @@ Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 Route::get('token', 'API\UserController@getToken');
 
+
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('change-password', 'API\UserController@changePassword');
     Route::get('get-project-user', 'API\UserController@getProject');
