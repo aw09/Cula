@@ -9,7 +9,12 @@ class Project extends Model
     protected $fillable = [
         'name', 'due_date',
     ];
+    
     function user(){
   		return $this->hasMany('App\member_of_project','id_project');
-  	}
+      }
+      
+    function board(){
+        return $this->hasMany('App\Board','id_project');
+    }
 }
