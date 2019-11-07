@@ -96,22 +96,4 @@ class ProjectController extends Controller
 
       return response()->json([$project->id=>$member], $this->successStatus);
     }
-
-    public function myProject(Request $request){
-        $validator = Validator::make($request->all(),[
-            'id_user' => 'required'
-        ]);
-        if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
-        }
-
-        $project = member_of_project::find($request->id_user);
-        $listProject = $project->project;
-
-        return response()->json([$project->id=>$listProject], $this->successStatus); 
-    }
-
-
-
-
 }
