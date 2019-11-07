@@ -163,8 +163,18 @@ class CreateCulaDatabase extends Migration
 		Schema::create('NOTIFICATIONS', function(Blueprint $table) {
 		    $table->increments('id');
 		    $table->string('notification', 255);
-			$table->date('date');
 			$table->unsignedInteger('id_user');
+
+        $table->foreign('id_user')->references('id')->on('users');
+
+		    $table->timestamps();
+
+		});
+
+		Schema::create('USER_PICTURES', function(Blueprint $table) {
+		    $table->increments('id');
+		    $table->unsignedInteger('id_user');
+			$table->string('picture', 255)->nullable();;
 
         $table->foreign('id_user')->references('id')->on('users');
 

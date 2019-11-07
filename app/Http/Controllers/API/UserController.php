@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\UserPicture;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -37,6 +38,10 @@ class UserController extends Controller
         $user = User::create($input);
         $success['token'] =  $user->createToken('nApp')->accessToken;
         $success['name'] =  $user->name;
+
+        $inputPicture['id_user']=$user->id;
+        $inputPicture['picture'] = "dummy";
+        $picture = UserPicture::create($inputPicture);
         return response()->json(['success'=>$success['token']]);
     }
     public function changePassword(Request $request){

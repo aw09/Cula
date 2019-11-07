@@ -60,4 +60,7 @@ class User extends Authenticatable
     function notif(){
         return $this->hasMany('App\Notification', 'id_user');
     }
+    function userProfile(){
+        return $this->hasMany('App\UserPicture', 'id_user');
+    }
 }
