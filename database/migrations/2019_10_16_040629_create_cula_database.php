@@ -60,7 +60,16 @@ class CreateCulaDatabase extends Migration
     });
 
 
-    Schema::create('TASKS', function(Blueprint $table) {
+		Schema::create('LABELS', function(Blueprint $table) {
+		    $table->increments('id');
+		    $table->string('color_of_label', 255);
+		    $table->string('label', 255);
+
+		    $table->timestamps();
+
+		});
+
+		Schema::create('TASKS', function(Blueprint $table) {
 		    $table->increments('id');
 		    $table->unsignedInteger('id_role');
 			$table->unsignedInteger('id_card');
@@ -78,6 +87,7 @@ class CreateCulaDatabase extends Migration
 		    $table->timestamps();
 
 		});
+
 		Schema::create('CHECK_LISTS', function(Blueprint $table) {
 		    $table->increments('id');
 		    $table->unsignedInteger('id_task');
@@ -156,6 +166,7 @@ class CreateCulaDatabase extends Migration
 
 		});
 
+
 		Schema::create('LINKS', function(Blueprint $table) {
 		    $table->increments('id');
 		    $table->unsignedInteger('id_task');
@@ -167,13 +178,24 @@ class CreateCulaDatabase extends Migration
 
 		});
 
+
 		Schema::create('NOTIFICATIONS', function(Blueprint $table) {
 		    $table->increments('id');
 		    $table->string('notification', 255);
-			$table->date('date');
 			$table->unsignedInteger('id_user');
 
-        $table->foreign('id_user')->references('id')->on('USERS');
+        $table->foreign('id_user')->references('id')->on('users');
+
+		    $table->timestamps();
+
+		});
+
+		Schema::create('USER_PICTURES', function(Blueprint $table) {
+		    $table->increments('id');
+		    $table->unsignedInteger('id_user');
+			$table->string('picture', 255)->nullable();;
+
+        $table->foreign('id_user')->references('id')->on('users');
 
 		    $table->timestamps();
 
@@ -250,6 +272,7 @@ class CreateCulaDatabase extends Migration
 		Schema::drop('CHECK_LIST');
 		Schema::drop('CARD');
 		Schema::drop('BOARD');
+		Schema::drop('NOTIFICATION');
 
     }
 }
