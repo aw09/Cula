@@ -59,16 +59,6 @@ class CreateCulaDatabase extends Migration
 
     });
 
-
-		Schema::create('LABELS', function(Blueprint $table) {
-		    $table->increments('id');
-		    $table->string('color_of_label', 255);
-		    $table->string('label', 255);
-
-		    $table->timestamps();
-
-		});
-
 		Schema::create('TASKS', function(Blueprint $table) {
 		    $table->increments('id');
 		    $table->unsignedInteger('id_role');
