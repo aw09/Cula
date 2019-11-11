@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use Auth;
+use DateTime;
 use App\member_of_task;
 use App\Task;
 
@@ -107,5 +108,17 @@ class TaskController extends Controller
       }
 
       return response()->json($listTask, $this->successStatus);
+  }
+  public function myUrgentTask(){
+    $user = Auth::user();
+    $dateAWeek = (new DateTime('+7 days'))->format('Y-m-d');
+    // dd($dateAWeek);
+    $listTask = array();
+    $task = $user->task;
+    foreach ($task as $key) {
+      $listTask = Task::where('due_date','<',$dateAWeek)->get();
+    }
+
+    return response()->json($listTask, $this->successStatus);
   }
 }
