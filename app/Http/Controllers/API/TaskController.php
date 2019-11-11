@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use Auth;
+use App\member_of_task;
 use App\Task;
 
 class TaskController extends Controller
@@ -12,18 +14,23 @@ class TaskController extends Controller
   public $successStatus = 200;
   public function store(Request $request)
   {
+    $user = Auth::user();
       $validator = Validator::make($request->all(),[
           'id_card' => 'required',
-          'name_task' => 'required',
+          'task' => 'required',
       ]);
 
       if($validator->fails()){
           return response()->json(['error'=>$validator->errors()], 401);
       }
-
       $input = $request->all();
       $task = Task::create($input);
-      $success['name_task'] =  $task->NAME_TASK;
+      $req['id_user'] = $user->id;
+      $req['id_task'] = $task->id;
+      $req = new Request($req);
+      $this->addMember($req);
+
+      $success =  $task->task;
 
       return response()->json(['success'=>$success], $this->successStatus);
   }
@@ -90,5 +97,15 @@ class TaskController extends Controller
       $memberTask = member_of_task::create($input);
 
       return response()->json(['success'=>'success'], $this->successStatus);
+  }
+  public function myTask(){
+      $user = Auth::user();
+      $listTask = array();
+      $task = $user->task;
+      foreach ($task as $key) {
+        $listTask = Task::find($key->id_task);
+      }
+
+      return response()->json($listTask, $this->successStatus);
   }
 }
