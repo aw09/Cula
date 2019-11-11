@@ -12,18 +12,17 @@ class UserController extends Controller
     public function login(Request $request){
         if(Auth::attempt(['email'=>request('email'),'password'=>request('password')])){
             $user = Auth::user();
-            $success['token'] =  $user->createToken('nApp')->accessToken;
-            return response()->json(['success' => $success], $this->successStatus);
+            $token =  $user->createToken('nApp')->accessToken;
+            return response()->json(['token'=>$token], $this->successStatus);
         }
         else{
-            return response()->json(['error'=>request('password')], 401);
+            return response()->json(['error'], 401);
         }
     }
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            // 'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
@@ -35,9 +34,12 @@ class UserController extends Controller
         // dd($input);
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $success['token'] =  $user->createToken('nApp')->accessToken;
-        $success['name'] =  $user->name;
-        return response()->json(['success'=>$success['token']]);
+        $token =  $user->createToken('nApp')->accessToken;
+        return response()->json(['token'=>$token], $this->successStatus);
+    }
+    public function getUser(){
+      $user = Auth::user();
+      return response()->json(['user'=>$user], $this->successStatus);
     }
     public function changePassword(Request $request){
       $user = Auth::user();
@@ -62,12 +64,11 @@ class UserController extends Controller
         return response()->json(['error'=>'Unauthorised']);
       }
     }
-
-    public function getProject(){
-      $user = Auth::user();
-
-      $project = $user->project;
-
-      return response()->json([$user->id=>$project]);
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
     }
 }

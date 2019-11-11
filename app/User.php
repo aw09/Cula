@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function task()
     {
-        return $this->hasMany('App\member_of_task', 'id_user');
+        return $this->hasMany('App\Member_of_task', 'id_user');
     }
     public function card()
     {
