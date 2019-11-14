@@ -75,16 +75,15 @@ class UserController extends Controller
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
-    public function getPicture(){
+    public function getUser(){
         $user = Auth::user();
-
+        dd($user);
         $picture = $user->userProfile;
         $p = array();
         foreach($picture as $pic){
             $p[] = $pic->picture;
-
         }
-        return response()->json($p);
+        return response()->json(['user'=>$user, 'picture'=>$picture]);
     }
 
     public function getProject(){

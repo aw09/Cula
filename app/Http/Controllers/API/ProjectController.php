@@ -71,7 +71,7 @@ class ProjectController extends Controller
     public function addMember(Request $request){
         $validator = Validator::make($request->all(),[
             'id_user' => 'required',
-            'id_project' => 'required',
+            'id_project' => 'required|unique:member_of_projects,id_project,NULL,NULL,id_user,'.$user->id,
         ]);
 
         if($validator->fails()){

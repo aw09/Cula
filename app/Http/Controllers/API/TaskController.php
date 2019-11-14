@@ -87,7 +87,7 @@ class TaskController extends Controller
   public function addMember(Request $request){
       $validator = Validator::make($request->all(),[
           'id_user' => 'required',
-          'id_task' => 'required',
+          'id_task' => 'required|unique:member_of_tasks,id_task,NULL,NULL,id_user,'.$user->id,
       ]);
 
       if($validator->fails()){
