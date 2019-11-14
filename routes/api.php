@@ -24,6 +24,8 @@ Route::get('token', 'API\UserController@getToken');
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('change-password', 'API\UserController@changePassword');
     Route::get('get-project-user', 'API\UserController@getProject');
+    Route::post('change-user-picture/{user-picture}', 'API\UserController@updatePicture');
+    Route::get('get-picture-profile', 'API\UserController@getPicture');
 
     Route::get('index-project', 'API\ProjectController@index');
     Route::post('create-project', 'API\ProjectController@store');

@@ -110,4 +110,33 @@ class ClusterController extends Controller
         $cluster->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
+
+    public function addCluster(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id_card' => 'required',
+            'id_cluster' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
+
+        $input = $request->all();
+        $clustering = Clustering::create($input);
+
+        return response()->json([$clustering], $this->successStatus);
+    }
+
+    public function getCluster(Request $request){
+      $user = Auth::user();
+      $validator = Validator::make($request->all(),[
+          'id_project' => 'required'
+      ]);
+      if($validator->fails()){
+          return response()->json(['error'=>$validator->errors()], 401);
+      }
+      $cluster = Cluster::find($request->id_cluster);
+
+      return response()->json([$cluster], $this->successStatus);
+    }
 }
