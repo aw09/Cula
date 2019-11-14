@@ -68,7 +68,6 @@ class UserController extends Controller
         return response()->json(['error'=>'Unauthorised']);
       }
     }
-<<<<<<< HEAD
 
     public function updatePicture(Request $request, UserPicture $userPicture)
     {
@@ -80,8 +79,13 @@ class UserController extends Controller
     public function getPicture(){
         $user = Auth::user();
 
-        $picture = $user->profilePicture;
-        return response()->json(['success'=>$picture]);
+        $picture = $user->userProfile;
+        $p = array();
+        foreach($picture as $pic){
+            $p[] = $pic->picture;
+
+        }
+        return response()->json($p);
     }
 
     public function getProject(){
@@ -90,13 +94,13 @@ class UserController extends Controller
       $project = $user->project;
 
       return response()->json(['success'=>$project]);
-=======
+    }
+
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'Successfully logged out'
         ]);
->>>>>>> 3af31878b7f598a61718e1b1dbb4a8c99c1cab43
     }
 }

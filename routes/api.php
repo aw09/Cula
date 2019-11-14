@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('logout', 'API\UserController@logout');
     Route::get('get-project-user', 'API\UserController@getProject');
     Route::post('change-user-picture/{user-picture}', 'API\UserController@updatePicture');
-    Route::get('get-user', 'API\UserController@getUser');
+    Route::get('get-user', 'API\UserController@getPicture');
 
     Route::post('create-project', 'API\ProjectController@store');
     Route::get('show-project/{project}', 'API\ProjectController@show');
