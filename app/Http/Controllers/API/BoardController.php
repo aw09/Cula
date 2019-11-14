@@ -7,6 +7,7 @@ use App\member_of_board;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class BoardController extends Controller
 {
@@ -20,6 +21,7 @@ class BoardController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_project' => 'required',
             'name' => 'required',
@@ -32,6 +34,11 @@ class BoardController extends Controller
         $input = $request->all();
         $board = Board::create($input);
         $success['name'] =  $board->name;
+
+        $req['id_user'] = $user->id;
+        $req['id_board'] = $board->id;
+        $req = new Request($req);
+        $this->addMember($req);
 
         return response()->json(['success'=>$success], $this->successStatus);
     }
@@ -86,7 +93,7 @@ class BoardController extends Controller
 
     public function addMember(Request $request){
         $validator = Validator::make($request->all(),[
-            'id' => 'required',
+            'id_user' => 'required',
             'id_board' => 'required',
         ]);
 

@@ -1,24 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Cluster;
+use App\Grouping;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 
-class ClusterController extends Controller
+class GroupingController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public $successStatus = 200;
+
     public function index()
     {
-        $cluster = Cluster::all();
-        return response()->json(['success'=>$cluster], $this->successStatus);
+        $label = Grouping::all();
+        return response()->json(['success'=>$label], $this->successStatus);
     }
 
     /**
@@ -40,7 +42,8 @@ class ClusterController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'cluster' => 'required',
+            'id_card' => 'required',
+            'grouping' => 'required',
         ]);
 
         if($validator->fails()){
@@ -49,8 +52,8 @@ class ClusterController extends Controller
         }
 
         $input = $request->all();
-        $cluster = Cluster::create($input);
-        $success =  $cluster;
+        $label = Grouping::create($input);
+        $success =  $label;
 
         return response()->json(['success'=>$success], $this->successStatus);
     }
@@ -58,21 +61,21 @@ class ClusterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\cluster  $cluster
+     * @param  \App\Grouping  $grouping
      * @return \Illuminate\Http\Response
      */
-    public function show(cluster $cluster)
+    public function show(Grouping $grouping)
     {
-        return response()->json(['success'=>$cluster], $this->successStatus);
+        return response()->json(['success'=>$grouping], $this->successStatus);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\cluster  $cluster
+     * @param  \App\Grouping  $grouping
      * @return \Illuminate\Http\Response
      */
-    public function edit(cluster $cluster)
+    public function edit(Grouping $grouping)
     {
         //
     }
@@ -81,62 +84,35 @@ class ClusterController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\cluster  $cluster
+     * @param  \App\Grouping  $grouping
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, cluster $cluster)
+    public function update(Request $request, Grouping $grouping)
     {
         $validator = Validator::make($request->all(),[
-            'cluster' => 'required',
+            'id_card' => 'required',
+            'grouping' => 'required',
+            
         ]);
 
         if($validator->fails()){
             return response()->json(['error'=>'error']);
         }
 
-        $cluster->update($request->all());
-        $success =  $cluster;
+        $label->update($request->all());
+        $success =  $label;
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\cluster  $cluster
+     * @param  \App\Grouping  $grouping
      * @return \Illuminate\Http\Response
      */
-    public function destroy(cluster $cluster)
+    public function destroy(Grouping $grouping)
     {
-        $cluster->delete();
+        $grouping->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
-    }
-
-    public function addCluster(Request $request){
-        $validator = Validator::make($request->all(),[
-            'id_card' => 'required',
-            'id_cluster' => 'required',
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
-        }
-
-        $input = $request->all();
-        $clustering = Clustering::create($input);
-
-        return response()->json([$clustering], $this->successStatus);
-    }
-
-    public function getCluster(Request $request){
-      $user = Auth::user();
-      $validator = Validator::make($request->all(),[
-          'id_project' => 'required'
-      ]);
-      if($validator->fails()){
-          return response()->json(['error'=>$validator->errors()], 401);
-      }
-      $cluster = Cluster::find($request->id_cluster);
-
-      return response()->json([$cluster], $this->successStatus);
     }
 }

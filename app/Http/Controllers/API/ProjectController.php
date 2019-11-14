@@ -101,6 +101,24 @@ class ProjectController extends Controller
         return response()->json("Project not found", 401);
     }
 
+    public function deleteMember(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id_user' => 'required',
+            'id_project' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
+
+        member_of_project::where('id_user', $request['id_user'])
+                                    ->where('id_project', $request['id_project'])->delete();;
+
+
+        
+        return response()->json(['success'=>'Success'], $this->successStatus);
+    }
+
     public function myProject(){
       $user = Auth::user();
       $listProject = array();
