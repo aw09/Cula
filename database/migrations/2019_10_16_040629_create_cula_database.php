@@ -50,15 +50,14 @@ class CreateCulaDatabase extends Migration
 		    $table->timestamps();
 
 		});
+    Schema::create('LABELS', function(Blueprint $table) {
+        $table->increments('id');
+        $table->string('color_of_label', 255);
+        $table->string('label', 255);
 
-		Schema::create('LABELS', function(Blueprint $table) {
-		    $table->increments('id');
-		    $table->string('color_of_label', 255);
-		    $table->string('label', 255);
+        $table->timestamps();
 
-		    $table->timestamps();
-
-		});
+    });
 
 		Schema::create('TASKS', function(Blueprint $table) {
 		    $table->increments('id');
@@ -72,8 +71,8 @@ class CreateCulaDatabase extends Migration
 		    $table->date('finish_date')->nullable();
 
         $table->foreign('id_card')->references('id')->on('CARDS');
-		$table->foreign('id_role')->references('id')->on('USER_ROLES');
-		$table->foreign('id_label')->references('id')->on('LABELS');
+		$table->foreign('id_role')->references('id')->on('USER_ROLES')->nullable();
+		$table->foreign('id_label')->references('id')->on('LABELS')->nullable();
 
 		    $table->timestamps();
 
@@ -99,6 +98,16 @@ class CreateCulaDatabase extends Migration
         $table->rememberToken();
         $table->timestamps();
     });
+    Schema::create('photos', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('name')->nullable();
+        $table->string('email')->unique();
+        $table->timestamp('email_verified_at')->nullable();
+        $table->string('password');
+        $table->rememberToken();
+        $table->timestamps();
+    });
+
 
     // Schema::create('USERS', function(Blueprint $table) {
 		//     $table->increments('id');
@@ -119,7 +128,7 @@ class CreateCulaDatabase extends Migration
 		    $table->longText('comment');
 		    $table->date('date');
 
-        $table->foreign('id_user')->references('id')->on('USERS');
+        $table->foreign('id_user')->references('id')->on('users');
         $table->foreign('id_task')->references('id')->on('TASKS');
 
 		    $table->timestamps();

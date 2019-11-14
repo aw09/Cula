@@ -13,11 +13,11 @@ class UserController extends Controller
     public function login(Request $request){
         if(Auth::attempt(['email'=>request('email'),'password'=>request('password')])){
             $user = Auth::user();
-            $success['token'] =  $user->createToken('nApp')->accessToken;
-            return response()->json(['success' => $success], $this->successStatus);
+            $token =  $user->createToken('nApp')->accessToken;
+            return response()->json(['token'=>$token], $this->successStatus);
         }
         else{
-            return response()->json(['error'=>request('password')], 401);
+            return response()->json(['error'], 401);
         }
     }
 
@@ -25,7 +25,6 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            // 'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
@@ -69,6 +68,7 @@ class UserController extends Controller
         return response()->json(['error'=>'Unauthorised']);
       }
     }
+<<<<<<< HEAD
 
     public function updatePicture(Request $request, UserPicture $userPicture)
     {
@@ -90,5 +90,13 @@ class UserController extends Controller
       $project = $user->project;
 
       return response()->json(['success'=>$project]);
+=======
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+>>>>>>> 3af31878b7f598a61718e1b1dbb4a8c99c1cab43
     }
 }

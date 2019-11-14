@@ -23,7 +23,8 @@ class ProjectController extends Controller
     public function store(Request $request){
         $user = Auth::user();
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
+            'name' => 'required', //nama dan id harus unik
+
         ]);
 
         if($validator->fails()){
@@ -92,8 +93,26 @@ class ProjectController extends Controller
           return response()->json(['error'=>$validator->errors()], 401);
       }
       $project = Project::find($request->id_project);
-      $member = $project->user;
-
-      return response()->json([$project->id=>$member], $this->successStatus);
+      if(isset($project)){
+        $member = $project->user;
+        return response()->json($member, $this->successStatus);
+      }
+      else
+        return response()->json("Project not found", 401);
     }
+
+    public function myProject(){
+      $user = Auth::user();
+      $listProject = array();
+      $project = $user->project;
+      foreach ($project as $key) {
+        $listProject[] = Project::find($key->id_project);
+      }
+
+      return response()->json($listProject);
+    }
+
+
+
+
 }

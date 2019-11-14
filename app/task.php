@@ -12,7 +12,7 @@ class Task extends Model
    * @var array
    */
   protected $fillable = [
-      'ID_ROLE', 'ID_CARD', 'NAME_TASK', 'DETAIL_OF_TASK', 'DUE_DATE_TASK',
+      'ID_ROLE', 'id_card', 'task', 'detail_of_task', 'DUE_DATE_TASK',
       'START_DATE_TASK', 'FINISH_DATE_TASK', 'ID_LABEL',
   ];
   function user(){

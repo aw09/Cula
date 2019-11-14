@@ -19,28 +19,31 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 Route::get('token', 'API\UserController@getToken');
-
+Route::get('index-project', 'API\ProjectController@index');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::post('change-password', 'API\UserController@changePassword');
+    Route::get('logout', 'API\UserController@logout');
     Route::get('get-project-user', 'API\UserController@getProject');
     Route::post('change-user-picture/{user-picture}', 'API\UserController@updatePicture');
-    Route::get('get-picture-profile', 'API\UserController@getPicture');
+    Route::get('get-user', 'API\UserController@getUser');
 
-    Route::get('index-project', 'API\ProjectController@index');
     Route::post('create-project', 'API\ProjectController@store');
     Route::get('show-project/{project}', 'API\ProjectController@show');
     Route::post('add-member-project', 'API\ProjectController@addMember');
     Route::put('update-project/{project}', 'API\ProjectController@update');
     Route::put('delete-project/{project}', 'API\ProjectController@destroy');
     Route::post('get-member-project', 'API\ProjectController@getMember');
+    Route::get('myProject', 'API\ProjectController@myProject');
 
-    Route::get('index-board', 'API\BoardController@index');
     Route::post('create-task', 'API\TaskController@store');
     Route::post('add-member-task', 'API\TaskController@addMember');
     Route::put('update-task/{task}', 'API\TaskController@update');
     Route::put('delete-task/{task}', 'API\TaskController@destroy');
+    Route::get('roadmap', 'API\TaskController@myTask');
+    Route::get('reminder', 'API\TaskController@myUrgentTask');
 
+    Route::get('index-board', 'API\BoardController@index');
     Route::post('create-board', 'API\BoardController@store');
     Route::get('show-board/{board}', 'API\BoardController@show');
     Route::post('add-member-board', 'API\BoardController@addMember');
