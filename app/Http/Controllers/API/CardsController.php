@@ -6,6 +6,7 @@ use App\Cards;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use Auth;
 
 class CardsController extends Controller
 {
@@ -74,7 +75,7 @@ class CardsController extends Controller
      */
     public function edit(Cards $cards)
     {
-        
+
     }
 
     /**
@@ -110,5 +111,15 @@ class CardsController extends Controller
     {
         $cards->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
+    }
+    public function myCard(){
+      $user = Auth::user();
+      $listCard = array();
+      $card = $user->card;
+      foreach ($card as $key) {
+        $listCard[] = Card::find($key->id_card);
+      }
+
+      return response()->json($listCard);
     }
 }
