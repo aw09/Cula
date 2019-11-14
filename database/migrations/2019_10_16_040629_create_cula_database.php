@@ -128,7 +128,7 @@ class CreateCulaDatabase extends Migration
 		    $table->longText('comment');
 		    $table->date('date');
 
-        $table->foreign('id_user')->references('id')->on('USERS');
+        $table->foreign('id_user')->references('id')->on('users');
         $table->foreign('id_task')->references('id')->on('TASKS');
 
 		    $table->timestamps();

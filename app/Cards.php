@@ -21,7 +21,8 @@ class Cards extends Model
         return $this->hasMany('App\task', 'id_card');
     }
 
-    function cluster(){
-        return $this->hasMany('App\Clustering', 'id_card');
+    function card(){
+        return $this->hasMany('App\Card','id_card');
     }
+
 }

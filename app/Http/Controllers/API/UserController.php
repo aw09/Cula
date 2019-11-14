@@ -20,6 +20,7 @@ class UserController extends Controller
             return response()->json(['error'], 401);
         }
     }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -43,6 +44,7 @@ class UserController extends Controller
         $picture = UserPicture::create($inputPicture);
         return response()->json(['success'=>$success['token']]);
     }
+
     public function changePassword(Request $request){
       $user = Auth::user();
       $validator = Validator::make($request->all(), [
@@ -65,6 +67,34 @@ class UserController extends Controller
         return response()->json(['error'=>'Unauthorised']);
       }
     }
+
+    public function updatePicture(Request $request, UserPicture $userPicture)
+    {
+        $picture->update($request->all());
+        $success =  $picture;
+        return response()->json(['success'=>$success], $this->successStatus);
+    }
+
+    public function getPicture(){
+        $user = Auth::user();
+
+        $picture = $user->userProfile;
+        $p = array();
+        foreach($picture as $pic){
+            $p[] = $pic->picture;
+
+        }
+        return response()->json($p);
+    }
+
+    public function getProject(){
+      $user = Auth::user();
+
+      $project = $user->project;
+
+      return response()->json(['success'=>$project]);
+    }
+
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
