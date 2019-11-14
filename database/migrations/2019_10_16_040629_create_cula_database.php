@@ -57,13 +57,26 @@ class CreateCulaDatabase extends Migration
 
         $table->timestamps();
 
-    });
+	});
+	
+	Schema::create('GROUPINGS', function(Blueprint $table) {
+		$table->increments('id');
+		$table->unsignedInteger('id_card');
+		$table->string('grouping', 255);
+		
+		$table->foreign('id_card')->references('id')->on('CARDS');
+
+
+		$table->timestamps();
+
+	});
 
 		Schema::create('TASKS', function(Blueprint $table) {
 		    $table->increments('id');
 		    $table->unsignedInteger('id_role');
 			$table->unsignedInteger('id_card');
 			$table->unsignedInteger('id_label');
+			$table->unsignedInteger('id_grouping');
 		    $table->string('task', 255);
 		    $table->string('detail_of_task', 255);
 		    $table->date('due_date')->nullable();
@@ -73,6 +86,7 @@ class CreateCulaDatabase extends Migration
         $table->foreign('id_card')->references('id')->on('CARDS');
 		$table->foreign('id_role')->references('id')->on('USER_ROLES')->nullable();
 		$table->foreign('id_label')->references('id')->on('LABELS')->nullable();
+		$table->foreign('id_grouping')->references('id')->on('GROUPINGS')->nullable();
 
 		    $table->timestamps();
 
@@ -130,27 +144,6 @@ class CreateCulaDatabase extends Migration
 
         $table->foreign('id_user')->references('id')->on('users');
         $table->foreign('id_task')->references('id')->on('TASKS');
-
-		    $table->timestamps();
-
-		});
-
-		Schema::create('CLUSTERS', function(Blueprint $table) {
-		    $table->increments('id');
-		    $table->string('cluster', 255);
-
-
-		    $table->timestamps();
-
-		});
-
-		Schema::create('CLUSTERINGS', function(Blueprint $table) {
-		    $table->unsignedInteger('id_card');
-		    $table->unsignedInteger('id_cluster');
-
-        $table->foreign('id_card')->references('id')->on('CARDS');
-        $table->foreign('id_cluster')->references('id')->on('CLUSTERS');
-		    $table->primary('id_card', 'id_cluster');
 
 		    $table->timestamps();
 

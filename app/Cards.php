@@ -25,4 +25,8 @@ class Cards extends Model
         return $this->hasMany('App\Card','id_card');
     }
 
+    function grouping(){
+        return $this->hasMany('App\Cards', 'id_card');
+    }
+
 }

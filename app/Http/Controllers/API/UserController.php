@@ -77,7 +77,6 @@ class UserController extends Controller
 
     public function getUser(){
         $user = Auth::user();
-        dd($user);
         $picture = $user->userProfile;
         $p = array();
         foreach($picture as $pic){
