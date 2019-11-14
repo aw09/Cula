@@ -64,6 +64,6 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add-member-card', 'API\CardsController@addMember');
     Route::put('update-card/{cards}', 'API\CardsController@update');
     Route::put('delete-card/{cards}', 'API\CardsController@destroy');
-    Route::get('myCard', 'API\CardController@myCard');
+    Route::get('myCard', 'API\CardsController@myCard');
 
 });
