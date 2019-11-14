@@ -104,7 +104,7 @@ class TaskController extends Controller
       $listTask = array();
       $task = $user->task;
       foreach ($task as $key) {
-        $listTask = Task::find($key->id_task);
+        $listTask[] = Task::find($key->id_task);
       }
 
       return response()->json($listTask, $this->successStatus);

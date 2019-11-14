@@ -17,7 +17,7 @@ class UserController extends Controller
             return response()->json(['token'=>$token], $this->successStatus);
         }
         else{
-            return response()->json(['error'], 401);
+            return response()->json(['Email and Password doesnt match'], 401);
         }
     }
 
