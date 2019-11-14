@@ -22,12 +22,14 @@ Route::get('token', 'API\UserController@getToken');
 Route::get('index-project', 'API\ProjectController@index');
 
 Route::group(['middleware' => 'auth:api'], function(){
+    //UserController
     Route::post('change-password', 'API\UserController@changePassword');
     Route::get('logout', 'API\UserController@logout');
     Route::get('get-project-user', 'API\UserController@getProject');
     Route::post('change-user-picture/{user-picture}', 'API\UserController@updatePicture');
     Route::get('get-user', 'API\UserController@getPicture');
 
+    //ProjectController
     Route::post('create-project', 'API\ProjectController@store');
     Route::get('show-project/{project}', 'API\ProjectController@show');
     Route::post('add-member-project', 'API\ProjectController@addMember');
@@ -37,6 +39,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('myProject', 'API\ProjectController@myProject');
     Route::post('delete-member-project', 'API\ProjectController@deleteMember');
 
+    //TaskController
     Route::post('create-task', 'API\TaskController@store');
     Route::post('add-member-task', 'API\TaskController@addMember');
     Route::put('update-task/{task}', 'API\TaskController@update');
@@ -44,18 +47,23 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('roadmap', 'API\TaskController@myTask');
     Route::get('reminder', 'API\TaskController@myUrgentTask');
 
+    //BoardController
     Route::get('index-board', 'API\BoardController@index');
     Route::post('create-board', 'API\BoardController@store');
     Route::get('show-board/{board}', 'API\BoardController@show');
     Route::post('add-member-board', 'API\BoardController@addMember');
     Route::put('update-board/{board}', 'API\BoardController@update');
     Route::put('delete-board/{board}', 'API\BoardController@destroy');
+    Route::get('myBoard', 'API\BoardController@myBoard');
 
+
+    //CardsController
     Route::get('index-card', 'API\CardsController@index');
     Route::post('create-card', 'API\CardsController@store');
     Route::get('show-card/{cards}', 'API\CardsController@show');
     Route::post('add-member-card', 'API\CardsController@addMember');
     Route::put('update-card/{cards}', 'API\CardsController@update');
     Route::put('delete-card/{cards}', 'API\CardsController@destroy');
+    Route::get('myCard', 'API\CardController@myCard');
 
 });
