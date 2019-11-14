@@ -6,6 +6,7 @@ use App\Board;
 use App\member_of_board;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth;
 use Validator;
 
 class BoardController extends Controller
@@ -98,5 +99,15 @@ class BoardController extends Controller
         $memberBoard = member_of_board::create($input);
 
         return response()->json(['success'=>'success'], $this->successStatus);
+    }
+    public function myBoard(){
+      $user = Auth::user();
+      $listBoard = array();
+      $board = $user->board;
+      foreach ($board as $key) {
+        $listBoard[] = Board::find($key->id_board);
+      }
+
+      return response()->json($listBoard);
     }
 }

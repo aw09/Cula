@@ -56,7 +56,6 @@ class UserController extends Controller
       $input = $request->all();
       $input['new_password'] = bcrypt($input['new_password']);
       $credentials = Hash::check($input['old_password'], $user['password']);
-      //error_log('Some message here.'.$validator->fails());
       if($credentials){
         $user['password'] = $input['new_password'];
         $user->save();
