@@ -25,7 +25,7 @@ class UserController extends Controller
             $user = Auth::user();
             $token =  $user->createToken('nApp')->accessToken;
             $user = $this->getUser();
-            return response()->json(['token'=>$token, $user], $this->successStatus);
+            return response()->json(['token'=>$token, 'user'=>$user->original], $this->successStatus);
         }
         else{
             return response()->json(['Email and Password doesnt match'], 401);
