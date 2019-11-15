@@ -99,6 +99,22 @@ class TaskController extends Controller
 
       return response()->json(['success'=>'success'], $this->successStatus);
   }
+  public function getMember(Request $request){
+    $user = Auth::user();
+    $validator = Validator::make($request->all(),[
+        'id_project' => 'required'
+    ]);
+    if($validator->fails()){
+        return response()->json(['error'=>$validator->errors()], 401);
+    }
+    $project = Project::find($request->id_project);
+    if(isset($project)){
+      $member = $project->user;
+      return response()->json($member, $this->successStatus);
+    }
+    else
+      return response()->json("Project not found", 401);
+  }
   public function myTask(){
       $user = Auth::user();
       $listTask = array();

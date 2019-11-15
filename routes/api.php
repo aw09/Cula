@@ -44,8 +44,9 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add-member-task', 'API\TaskController@addMember');
     Route::put('update-task/{task}', 'API\TaskController@update');
     Route::put('delete-task/{task}', 'API\TaskController@destroy');
-    Route::get('roadmap', 'API\TaskController@myTask');
-    Route::get('reminder', 'API\TaskController@myUrgentTask');
+    Route::post('get-member-task', 'API\TaskController@getMember');
+    Route::get('myTask', 'API\TaskController@myTask'); //Roadmap
+    Route::get('myUrgentTask', 'API\TaskController@myUrgentTask'); //Reminder
 
     //BoardController
     Route::get('index-board', 'API\BoardController@index');

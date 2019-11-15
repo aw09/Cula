@@ -69,6 +69,7 @@ class ProjectController extends Controller
     }
 
     public function addMember(Request $request){
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_user' => 'required',
             'id_project' => 'required|unique:member_of_projects,id_project,NULL,NULL,id_user,'.$user->id,
@@ -115,7 +116,7 @@ class ProjectController extends Controller
                                     ->where('id_project', $request['id_project'])->delete();;
 
 
-        
+
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 
