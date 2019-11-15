@@ -7,6 +7,7 @@ use App\member_of_board;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use Auth;
 
 class BoardController extends Controller
 {
