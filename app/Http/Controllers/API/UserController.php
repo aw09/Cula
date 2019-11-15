@@ -94,8 +94,7 @@ class UserController extends Controller
         }
         $user = User::find($user->id);
         $picture = $p[0];
-        dd($picture);
-        $user['picture'] = $picture['picture'];
+        $user['picture'] = $picture;
         return response()->json(['user'=>$user]);
     }
 
