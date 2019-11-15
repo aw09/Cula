@@ -50,7 +50,6 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project){
         $validator = Validator::make($request->all(),[
-            'id' => 'required',
             'name' => 'required',
         ]);
 
