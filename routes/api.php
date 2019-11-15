@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('delete-project/{project}', 'API\ProjectController@destroy');
     Route::post('get-member-project', 'API\ProjectController@getMember');
     Route::get('myProject', 'API\ProjectController@myProject');
+    Route::post('boardOfProject', 'API\ProjectController@boardOfProject');
     Route::post('delete-member-project', 'API\ProjectController@deleteMember');
 
     //TaskController

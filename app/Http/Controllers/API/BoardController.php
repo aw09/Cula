@@ -32,6 +32,11 @@ class BoardController extends Controller
 
         $input = $request->all();
         $board = Board::create($input);
+        $req['id_user'] = $user->id;
+        $req['id_board'] = $board->id;
+        $req = new Request($req);
+        $this->addMember($req);
+
         $success['name'] =  $board->name;
 
         return response()->json(['success'=>$success], $this->successStatus);
@@ -100,7 +105,18 @@ class BoardController extends Controller
 
         return response()->json(['success'=>'success'], $this->successStatus);
     }
-    public function myBoard(Request $request){
+    public function myBoard(){
+      $user = Auth::user();
+      $board = $user->board;
+      $listBoard = array();
+      foreach ($board as $key) {
+        $listBoard[] = Board::find($key->id_board);
+      }
+
+      return response()->json($listBoard);
+
+    }
+    public function boardOfProject(Request $request){
       $user = Auth::user();
       $validator = Validator::make($request->all(),[
           'id_project' => 'required',
