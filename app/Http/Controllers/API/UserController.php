@@ -17,7 +17,7 @@ class UserController extends Controller
             return response()->json(['token'=>$token], $this->successStatus);
         }
         else{
-            return response()->json(['error'], 401);
+            return response()->json(['Email and Password doesnt match'], 401);
         }
     }
 
@@ -75,16 +75,14 @@ class UserController extends Controller
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
-    public function getPicture(){
+    public function getUser(){
         $user = Auth::user();
-
         $picture = $user->userProfile;
         $p = array();
         foreach($picture as $pic){
             $p[] = $pic->picture;
-
         }
-        return response()->json($p);
+        return response()->json(['user'=>$user, 'picture'=>$picture]);
     }
 
     public function getProject(){

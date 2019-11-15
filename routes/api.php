@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('logout', 'API\UserController@logout');
     Route::get('get-project-user', 'API\UserController@getProject');
     Route::post('change-user-picture/{user-picture}', 'API\UserController@updatePicture');
-    Route::get('get-user', 'API\UserController@getPicture');
+    Route::get('get-user', 'API\UserController@getUser');
 
     //ProjectController
     Route::post('create-project', 'API\ProjectController@store');
@@ -44,9 +44,15 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add-member-task', 'API\TaskController@addMember');
     Route::put('update-task/{task}', 'API\TaskController@update');
     Route::put('delete-task/{task}', 'API\TaskController@destroy');
+<<<<<<< HEAD
     Route::get('roadmap', 'API\TaskController@myTask');
     Route::get('reminder', 'API\TaskController@myUrgentTask');
     Route::post('delete-member-task', 'API\TaskController@deleteMember');
+=======
+    Route::post('get-member-task', 'API\TaskController@getMember');
+    Route::get('myTask', 'API\TaskController@myTask'); //Roadmap
+    Route::get('myUrgentTask', 'API\TaskController@myUrgentTask'); //Reminder
+>>>>>>> d039c0c57b336a2867cc7bb0710717d19c742d31
 
     //BoardController
     Route::get('index-board', 'API\BoardController@index');
@@ -66,7 +72,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add-member-card', 'API\CardsController@addMember');
     Route::put('update-card/{cards}', 'API\CardsController@update');
     Route::put('delete-card/{cards}', 'API\CardsController@destroy');
-    Route::get('myCard', 'API\CardController@myCard');
+    Route::get('myCard', 'API\CardsController@myCard');
 
     //GroupingController
     Route::post('create-grouping', 'API\GroupingController@store');

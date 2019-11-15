@@ -90,7 +90,7 @@ class TaskController extends Controller
     $user = Auth::user();
       $validator = Validator::make($request->all(),[
           'id_user' => 'required',
-          'id_task' => 'required',
+          'id_task' => 'required|unique:member_of_tasks,id_task,NULL,NULL,id_user,'.$user->id,
       ]);
 
       if($validator->fails()){
@@ -119,12 +119,28 @@ class TaskController extends Controller
     return response()->json(['success'=>'Success'], $this->successStatus);
 }
 
+  public function getMember(Request $request){
+    $user = Auth::user();
+    $validator = Validator::make($request->all(),[
+        'id_project' => 'required'
+    ]);
+    if($validator->fails()){
+        return response()->json(['error'=>$validator->errors()], 401);
+    }
+    $project = Project::find($request->id_project);
+    if(isset($project)){
+      $member = $project->user;
+      return response()->json($member, $this->successStatus);
+    }
+    else
+      return response()->json("Project not found", 401);
+  }
   public function myTask(){
       $user = Auth::user();
       $listTask = array();
       $task = $user->task;
       foreach ($task as $key) {
-        $listTask = Task::find($key->id_task);
+        $listTask[] = Task::find($key->id_task);
       }
 
       return response()->json($listTask, $this->successStatus);

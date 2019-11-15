@@ -7,7 +7,6 @@ use App\member_of_board;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
-use Illuminate\Support\Facades\Auth;
 
 class BoardController extends Controller
 {
@@ -22,7 +21,6 @@ class BoardController extends Controller
 
     public function store(Request $request)
     {
-        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_project' => 'required',
             'name' => 'required',
@@ -35,11 +33,6 @@ class BoardController extends Controller
         $input = $request->all();
         $board = Board::create($input);
         $success['name'] =  $board->name;
-
-        $req['id_user'] = $user->id;
-        $req['id_board'] = $board->id;
-        $req = new Request($req);
-        $this->addMember($req);
 
         return response()->json(['success'=>$success], $this->successStatus);
     }
@@ -98,8 +91,8 @@ class BoardController extends Controller
     public function addMember(Request $request){
         $user = Auth::user();
         $validator = Validator::make($request->all(),[
-            'id_user' => 'required',
-            'id_board' => 'required',
+            'id' => 'required',
+            'id_board' => 'required|unique:member_of_boards,id_board,NULL,NULL,id_user,'.$user->id,
         ]);
 
         if($validator->fails()){
@@ -128,14 +121,19 @@ class BoardController extends Controller
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 
-    public function myBoard(){
+    public function myBoard(Request $request){
       $user = Auth::user();
+      $validator = Validator::make($request->all(),[
+          'id_project' => 'required',
+      ]);
       $listBoard = array();
-      $board = $user->board;
-      foreach ($board as $key) {
-        $listBoard[] = Board::find($key->id_board);
+      $listProject = $user->project;
+      foreach ($listProject as $p) {
+        if($p->id == $request['id_project']){
+          $listBoard = Board::where('id_project', $request['id_project'])->get();
+          break;
+        }
       }
-
       return response()->json($listBoard);
     }
 }

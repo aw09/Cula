@@ -117,13 +117,28 @@ class CardsController extends Controller
         $cards->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
-    public function myCard(){ 
-        $user = Auth::user();
-        $listCard = array();
-        $card = $user->card;
-        foreach ($card as $key) {
-            $listCard[] = Card::find($key->id_card);
+    public function addMember(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id_user' => 'required',
+            'id_card' => 'required|unique:member_of_cards,id_card,NULL,NULL,id_user,'.$user->id,
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()], 401);
         }
+
+        $input = $request->all();
+        $memberCard = member_of_card::create($input);
+
+        return response()->json(['success'=>'success'], $this->successStatus);
+    }
+    public function myCard(){
+      $user = Auth::user();
+      $listCard = array();
+      $card = $user->card;
+      foreach ($card as $key) {
+        $listCard[] = Card::find($key->id_card);
+      }
 
       return response()->json($listCard);
     }
