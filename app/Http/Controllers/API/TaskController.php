@@ -15,7 +15,7 @@ class TaskController extends Controller
   public $successStatus = 200;
   public function store(Request $request)
   {
-    $user = Auth::user();
+      $user = Auth::user();
       $validator = Validator::make($request->all(),[
           'id_card' => 'required',
           'task' => 'required',
@@ -87,7 +87,7 @@ class TaskController extends Controller
   }
 
   public function addMember(Request $request){
-    $user = Auth::user();
+      $user = Auth::user();
       $validator = Validator::make($request->all(),[
           'id_user' => 'required',
           'id_task' => 'required|unique:member_of_tasks,id_task,NULL,NULL,id_user,'.$user->id,
@@ -115,7 +115,7 @@ class TaskController extends Controller
 
     member_of_board::where('id_user', $request['id_user'])
                                 ->where('id_task', $request['id_task'])->delete();;
-    
+
     return response()->json(['success'=>'Success'], $this->successStatus);
 }
 
