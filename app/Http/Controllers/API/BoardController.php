@@ -21,6 +21,7 @@ class BoardController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_project' => 'required',
             'name' => 'required',
