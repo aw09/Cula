@@ -34,9 +34,7 @@ class BoardController extends Controller
         $board = Board::create($input);
         $req['id_user'] = $user->id;
         $req['id_board'] = $board->id;
-        $req = new Request($req);
-        $this->addMember($req);
-
+        $memberBoard = member_of_board::create($req);
         $success['name'] =  $board->name;
 
         return response()->json(['success'=>$success], $this->successStatus);
