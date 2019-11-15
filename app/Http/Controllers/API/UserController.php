@@ -25,7 +25,7 @@ class UserController extends Controller
             $user = Auth::user();
             $token =  $user->createToken('nApp')->accessToken;
             $user = $this->getUser();
-            return response()->json(['token'=>$token, 'user'=>$user], $this->successStatus);
+            return response()->json(['token'=>$token, $user], $this->successStatus);
         }
         else{
             return response()->json(['Email and Password doesnt match'], 401);
@@ -92,6 +92,7 @@ class UserController extends Controller
         foreach($picture as $pic){
             $p[] = $pic->picture;
         }
+        $user = User::find($user->id);
         return response()->json(['user'=>$user, 'picture'=>$picture]);
     }
 
