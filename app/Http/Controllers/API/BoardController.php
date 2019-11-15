@@ -100,14 +100,19 @@ class BoardController extends Controller
 
         return response()->json(['success'=>'success'], $this->successStatus);
     }
-    public function myBoard(){
+    public function myBoard(Request $request){
       $user = Auth::user();
+      $validator = Validator::make($request->all(),[
+          'id_project' => 'required',
+      ]);
       $listBoard = array();
-      $board = $user->board;
-      foreach ($board as $key) {
-        $listBoard[] = Board::find($key->id_board);
+      $listProject = $user->project;
+      foreach ($listProject as $p) {
+        if($p->id == $request['id_project']){
+          $listBoard = Board::where('id_project', $request['id_project'])->get();
+          break;
+        }
       }
-
       return response()->json($listBoard);
     }
 }
