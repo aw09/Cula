@@ -18,6 +18,7 @@ class CardsController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $card = Cards::all();
         return response()->json(['success'=>$card], $this->successStatus);
     }
@@ -40,6 +41,7 @@ class CardsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_board' => 'required',
             'name' => 'required',
@@ -64,6 +66,7 @@ class CardsController extends Controller
      */
     public function show(Cards $cards)
     {
+        $user = Auth::user();
         return response()->json(['success'=>$cards], $this->successStatus);
     }
 
@@ -87,6 +90,7 @@ class CardsController extends Controller
      */
     public function update(Request $request, Cards $cards)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id' => 'required',
             'name' => 'required',
@@ -109,16 +113,17 @@ class CardsController extends Controller
      */
     public function destroy(Cards $cards)
     {
+        $user = Auth::user();
         $cards->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
-    public function myCard(){
-      $user = Auth::user();
-      $listCard = array();
-      $card = $user->card;
-      foreach ($card as $key) {
-        $listCard[] = Card::find($key->id_card);
-      }
+    public function myCard(){ 
+        $user = Auth::user();
+        $listCard = array();
+        $card = $user->card;
+        foreach ($card as $key) {
+            $listCard[] = Card::find($key->id_card);
+        }
 
       return response()->json($listCard);
     }

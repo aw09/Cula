@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Grouping;
+use App\task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
@@ -115,4 +116,39 @@ class GroupingController extends Controller
         $grouping->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
+
+    public function addTask(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id_task' => 'required',
+            'id_grouping' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $task = task::find($request->id_task);
+        
+        $task->id_grouping = $request->id_grouping;
+        $task->save();
+        return response()->json(['success'=>'Success'], $this->successStatus);
+
+    }
+
+    public function myTask(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id_grouping' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $listTask=task::where('id_grouping', $request['id_grouping'])->get();
+                                    
+  
+        return response()->json($listTask, $this->successStatus);
+    }
+
+
 }

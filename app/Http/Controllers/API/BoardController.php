@@ -6,7 +6,6 @@ use App\Board;
 use App\member_of_board;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Auth;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +15,7 @@ class BoardController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
         $board = Board::all();
         return response()->json(['success'=>$board], $this->successStatus);
     }
@@ -52,6 +52,7 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
+        $user = Auth::user();
         return response()->json(['success'=>$board], $this->successStatus);
     }
 
@@ -75,6 +76,7 @@ class BoardController extends Controller
      */
     public function update(Request $request, Board $board)
     {
+        $user = Auth::user();
         $board->update($request->all());
         $success =  $board;
         return response()->json(['success'=>$success], $this->successStatus);
@@ -88,11 +90,13 @@ class BoardController extends Controller
      */
     public function destroy(Board $board)
     {
+        $user = Auth::user();
         $board->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 
     public function addMember(Request $request){
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_user' => 'required',
             'id_board' => 'required',
@@ -107,6 +111,23 @@ class BoardController extends Controller
 
         return response()->json(['success'=>'success'], $this->successStatus);
     }
+
+    public function deleteMember(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id_user' => 'required',
+            'id_board' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
+
+        member_of_board::where('id_user', $request['id_user'])
+                                    ->where('id_board', $request['id_board'])->delete();;
+        
+        return response()->json(['success'=>'Success'], $this->successStatus);
+    }
+
     public function myBoard(){
       $user = Auth::user();
       $listBoard = array();
