@@ -46,9 +46,15 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add-member-task', 'API\TaskController@addMember');
     Route::put('update-task/{task}', 'API\TaskController@update');
     Route::put('delete-task/{task}', 'API\TaskController@destroy');
+<<<<<<< HEAD
+    Route::get('roadmap', 'API\TaskController@myTask');
+    Route::get('reminder', 'API\TaskController@myUrgentTask');
+    Route::post('delete-member-task', 'API\TaskController@deleteMember');
+=======
     Route::post('get-member-task', 'API\TaskController@getMember');
     Route::get('myTask', 'API\TaskController@myTask'); //Roadmap
     Route::get('myUrgentTask', 'API\TaskController@myUrgentTask'); //Reminder
+>>>>>>> d039c0c57b336a2867cc7bb0710717d19c742d31
 
     //BoardController
     Route::get('index-board', 'API\BoardController@index');
@@ -58,6 +64,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('update-board/{board}', 'API\BoardController@update');
     Route::put('delete-board/{board}', 'API\BoardController@destroy');
     Route::get('myBoard', 'API\BoardController@myBoard');
+    Route::post('delete-member-board', 'API\BoardController@deleteMember');
 
 
     //CardsController
@@ -69,4 +76,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('delete-card/{cards}', 'API\CardsController@destroy');
     Route::get('myCard', 'API\CardsController@myCard');
 
+    //GroupingController
+    Route::post('create-grouping', 'API\GroupingController@store');
+    Route::post('add-grouping', 'API\GroupingController@addTask');
+    Route::post('list-grouping', 'API\GroupingController@myTask');
 });

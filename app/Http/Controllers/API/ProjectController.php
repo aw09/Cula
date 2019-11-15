@@ -113,7 +113,7 @@ class ProjectController extends Controller
         }
 
         member_of_project::where('id_user', $request['id_user'])
-                                    ->where('id_project', $request['id_project'])->delete();;
+                                    ->where('id_project', $request['id_project'])->delete();
 
 
 

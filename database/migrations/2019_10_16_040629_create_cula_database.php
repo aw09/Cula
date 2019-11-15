@@ -73,12 +73,12 @@ class CreateCulaDatabase extends Migration
 
 		Schema::create('TASKS', function(Blueprint $table) {
 		    $table->increments('id');
-		    $table->unsignedInteger('id_role');
+		    $table->unsignedInteger('id_role')->nullable();
 			$table->unsignedInteger('id_card');
-			$table->unsignedInteger('id_label');
-			$table->unsignedInteger('id_grouping');
+			$table->unsignedInteger('id_label')->nullable();
+			$table->unsignedInteger('id_grouping')->nullable();
 		    $table->string('task', 255);
-		    $table->string('detail_of_task', 255);
+		    $table->string('detail_of_task', 255)->nullable();
 		    $table->date('due_date')->nullable();
 		    $table->date('start_date')->nullable();
 		    $table->date('finish_date')->nullable();

@@ -67,9 +67,10 @@ class TaskController extends Controller
    */
   public function update(Request $request, Task $task)
   {
-      $task->update($request->all());
-      $success =  $task;
-      return response()->json(['success'=>$success], $this->successStatus);
+        $user = Auth::user();
+        $task->update($request->all());
+        $success =  $task;
+        return response()->json(['success'=>$success], $this->successStatus);
   }
 
   /**
@@ -80,11 +81,13 @@ class TaskController extends Controller
    */
   public function destroy(Task $task)
   {
+    $user = Auth::user();
       $task->delete();
       return response()->json(['success'=>'Success'], $this->successStatus);
   }
 
   public function addMember(Request $request){
+    $user = Auth::user();
       $validator = Validator::make($request->all(),[
           'id_user' => 'required',
           'id_task' => 'required|unique:member_of_tasks,id_task,NULL,NULL,id_user,'.$user->id,
@@ -99,6 +102,23 @@ class TaskController extends Controller
 
       return response()->json(['success'=>'success'], $this->successStatus);
   }
+
+  public function deleteMember(Request $request){
+    $validator = Validator::make($request->all(),[
+        'id_user' => 'required',
+        'id_task' => 'required',
+    ]);
+
+    if($validator->fails()){
+        return response()->json(['error'=>$validator->errors()], 401);
+    }
+
+    member_of_board::where('id_user', $request['id_user'])
+                                ->where('id_task', $request['id_task'])->delete();;
+    
+    return response()->json(['success'=>'Success'], $this->successStatus);
+}
+
   public function getMember(Request $request){
     $user = Auth::user();
     $validator = Validator::make($request->all(),[
@@ -125,6 +145,7 @@ class TaskController extends Controller
 
       return response()->json($listTask, $this->successStatus);
   }
+
   public function myUrgentTask(){
     $user = Auth::user();
     $dateAWeek = (new DateTime('+7 days'))->format('Y-m-d');
