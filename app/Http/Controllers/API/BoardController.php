@@ -126,7 +126,6 @@ class BoardController extends Controller
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 
-    public function myBoard(Request $request){
     public function myBoard(){
       $user = Auth::user();
       $board = $user->board;
@@ -138,7 +137,7 @@ class BoardController extends Controller
       return response()->json($listBoard);
 
     }
-    
+
     public function boardOfProject(Request $request){
       $user = Auth::user();
       $validator = Validator::make($request->all(),[
