@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('update-board/{board}', 'API\BoardController@update');
     Route::put('delete-board/{board}', 'API\BoardController@destroy');
     Route::get('myBoard', 'API\BoardController@myBoard');
+    Route::post('board-of-project', 'API\BoardController@boardOfProject');
     Route::post('delete-member-board', 'API\BoardController@deleteMember');
 
 

@@ -50,8 +50,19 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        $user = Auth::user();
-        return response()->json(['success'=>$board], $this->successStatus);
+      $user = Auth::user();
+      if(isset($board)){
+        $listBoard = $this->myBoard()->getData();
+        $listBoard = \App\Board::hydrate($listBoard);
+        $listBoard = $listBoard->all();
+        if(in_array($board,$listBoard))
+          return response()->json($board, $this->successStatus);
+        else
+          return response()->json('You are not a member of this board', 401);
+      }
+      else
+        return response()->json('Board not exixt', 401);
+      }
     }
 
     /**
