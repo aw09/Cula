@@ -24,7 +24,7 @@ class Task extends Model
   }
 
   function card(){
-    return $this->belongTo('App\Cards', 'id_card');
+    return $this->belongsTo('App\Cards', 'id_card');
   }
 
   function checkList(){
@@ -40,6 +40,6 @@ class Task extends Model
   }
 
   function label(){
-    return $this->belongTo('App\Label', 'id_label');
+    return $this->belongsTo('App\Label', 'id_label');
   }
 }
