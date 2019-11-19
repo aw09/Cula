@@ -38,6 +38,7 @@ class BoardController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_project' => 'required',
             'name' => 'required',
@@ -49,6 +50,9 @@ class BoardController extends Controller
 
         $input = $request->all();
         $board = Board::create($input);
+        $req['id_user'] = $user->id;
+        $req['id_board'] = $board->id;
+        $memberBoard = member_of_board::create($req);
         $success['name'] =  $board->name;
 
         return response()->json(['success'=>$success], $this->successStatus);
@@ -62,8 +66,19 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        $user = Auth::user();
-        return response()->json(['success'=>$board], $this->successStatus);
+      $user = Auth::user();
+      if(isset($board)){
+        $listBoard = $this->myBoard()->getData();
+        $listBoard = \App\Board::hydrate($listBoard);
+        $listBoard = $listBoard->all();
+        if(in_array($board,$listBoard))
+          return response()->json($board, $this->successStatus);
+        else
+          return response()->json('You are not a member of this board', 401);
+      }
+      else
+        return response()->json('Board not exixt', 401);
+      }
     }
 
     /**
@@ -134,11 +149,23 @@ class BoardController extends Controller
 
         member_of_board::where('id_user', $request['id_user'])
                                     ->where('id_board', $request['id_board'])->delete();;
-        
+
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 
-    public function myBoard(Request $request){
+    public function myBoard(){
+      $user = Auth::user();
+      $board = $user->board;
+      $listBoard = array();
+      foreach ($board as $key) {
+        $listBoard[] = Board::find($key->id_board);
+      }
+
+      return response()->json($listBoard);
+
+    }
+
+    public function boardOfProject(Request $request){
       $user = Auth::user();
       $validator = Validator::make($request->all(),[
           'id_project' => 'required',

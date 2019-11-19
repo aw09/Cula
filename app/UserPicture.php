@@ -11,6 +11,6 @@ class UserPicture extends Model
     ];
 
     function profilePicture(){
-        return $this->belongTo('App\User', 'id_user');
+        return $this->belongsTo('App\User', 'id_user');
     }
 }

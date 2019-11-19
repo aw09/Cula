@@ -11,7 +11,7 @@ class Notification extends Model
     ];
 
     function notif(){
-        return $this->belongTo('App\Notification', 'id_user');
+        return $this->belongsTo('App\Notification', 'id_user');
     }
 
 

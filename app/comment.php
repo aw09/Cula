@@ -11,6 +11,6 @@ class Comment extends Model
     ];
 
     function comment(){
-        return $this->belongTo('App\task', 'id_task');
+        return $this->belongsTo('App\task', 'id_task');
       }
 }

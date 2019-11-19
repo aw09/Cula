@@ -20,7 +20,17 @@ class UserController extends Controller
             return response()->json(['Email and Password doesnt match'], 401);
         }
     }
-
+    public function loginGetMember(Request $request){
+        if(Auth::attempt(['email'=>request('email'),'password'=>request('password')])){
+            $user = Auth::user();
+            $token =  $user->createToken('nApp')->accessToken;
+            $user = $this->getUser();
+            return response()->json(['token'=>$token, 'data'=>$user->original], $this->successStatus);
+        }
+        else{
+            return response()->json(['Email and Password doesnt match'], 401);
+        }
+    }
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -82,7 +92,10 @@ class UserController extends Controller
         foreach($picture as $pic){
             $p[] = $pic->picture;
         }
-        return response()->json(['user'=>$user, 'picture'=>$picture]);
+        $user = User::find($user->id);
+        $picture = $p[0];
+        $user['picture'] = $picture;
+        return response()->json(['user'=>$user]);
     }
 
     public function getProject(){

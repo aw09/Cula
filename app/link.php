@@ -11,6 +11,6 @@ class Link extends Model
     ];
 
     function link(){
-        return $this->belongTo('App\task', 'id_task');
+        return $this->belongsTo('App\task', 'id_task');
       }
 }

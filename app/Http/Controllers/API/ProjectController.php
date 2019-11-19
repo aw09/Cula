@@ -45,12 +45,22 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        return response()->json(['success'=>$project], $this->successStatus);
+        $user = Auth::user();
+        if(isset($project)){
+          $listProject = $this->myProject()->getData();
+          $listProject = \App\Project::hydrate($listProject);
+          $listProject = $listProject->all();
+          if(in_array($project,$listProject))
+            return response()->json($project, $this->successStatus);
+          else
+            return response()->json('You are not a member of this project', 401);
+        }
+        else
+          return response()->json('Project not exixt', 401);
     }
 
     public function update(Request $request, Project $project){
         $validator = Validator::make($request->all(),[
-            'id' => 'required',
             'name' => 'required',
         ]);
 
@@ -127,6 +137,7 @@ class ProjectController extends Controller
       foreach ($project as $key) {
         $listProject[] = Project::find($key->id_project);
       }
+      // dd($listProject);
 
       return response()->json($listProject);
     }

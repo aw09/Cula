@@ -12,13 +12,13 @@ class Cards extends Model
     function user(){
   		return $this->hasMany('App\member_of_card','id_card');
       }
-      
+
     function board(){
-        return $this->belongTo('App\Board', 'id_board');
+        return $this->belongsTo('App\Board', 'id_board');
     }
 
     function task(){
-        return $this->hasMany('App\task', 'id_card');
+        return $this->hasMany('App\Task');
     }
 
     function card(){

@@ -32,7 +32,7 @@ class TaskController extends Controller
 
   public function store(Request $request)
   {
-    $user = Auth::user();
+      $user = Auth::user();
       $validator = Validator::make($request->all(),[
           'id_card' => 'required',
           'task' => 'required',
@@ -45,9 +45,8 @@ class TaskController extends Controller
       $task = Task::create($input);
       $req['id_user'] = $user->id;
       $req['id_task'] = $task->id;
-      $req = new Request($req);
-      $this->addMember($req);
 
+      $memberTask = member_of_task::create($req);
       $success =  $task->task;
 
       return response()->json(['success'=>$success], $this->successStatus);
@@ -104,7 +103,7 @@ class TaskController extends Controller
   }
 
   public function addMember(Request $request){
-    $user = Auth::user();
+      $user = Auth::user();
       $validator = Validator::make($request->all(),[
           'id_user' => 'required',
           'id_task' => 'required|unique:member_of_tasks,id_task,NULL,NULL,id_user,'.$user->id,
@@ -132,7 +131,7 @@ class TaskController extends Controller
 
     member_of_board::where('id_user', $request['id_user'])
                                 ->where('id_task', $request['id_task'])->delete();;
-    
+
     return response()->json(['success'=>'Success'], $this->successStatus);
 }
 
@@ -157,9 +156,11 @@ class TaskController extends Controller
       $listTask = array();
       $task = $user->task;
       foreach ($task as $key) {
-        $listTask[] = Task::find($key->id_task);
+        $key = $key->task;
+        $key['id_board'] = intval($key->card->board->id);
+        $key['id_project'] = intval($key->card->board->project->id);
+        $listTask[] = $key;
       }
-
       return response()->json($listTask, $this->successStatus);
   }
 

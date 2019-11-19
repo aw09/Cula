@@ -17,8 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('login', 'API\UserController@login');
+Route::post('loginGetMember', 'API\UserController@loginGetMember');
 Route::post('register', 'API\UserController@register');
-Route::get('token', 'API\UserController@getToken');
 Route::get('index-project', 'API\ProjectController@index');
 
 Route::group(['middleware' => 'auth:api'], function(){
@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('delete-project/{project}', 'API\ProjectController@destroy');
     Route::post('get-member-project', 'API\ProjectController@getMember');
     Route::get('myProject', 'API\ProjectController@myProject');
+    Route::post('boardOfProject', 'API\ProjectController@boardOfProject');
     Route::post('delete-member-project', 'API\ProjectController@deleteMember');
 
     //TaskController
@@ -60,6 +61,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('update-board/{board}', 'API\BoardController@update');
     Route::put('delete-board/{board}', 'API\BoardController@destroy');
     Route::get('myBoard', 'API\BoardController@myBoard');
+    Route::post('board-of-project', 'API\BoardController@boardOfProject');
     Route::post('delete-member-board', 'API\BoardController@deleteMember');
 
     //CardsController

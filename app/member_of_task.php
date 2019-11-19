@@ -11,7 +11,7 @@ class Member_of_task extends Model
   ];
   public function task()
   {
-      return $this->hasone('App\Task', 'id_task');
+      return $this->belongsto('App\Task', 'id_task');
   }
   public function user()
   {
