@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Label;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 
-class LabelCpntroller extends Controller
+class LabelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -88,7 +88,7 @@ class LabelCpntroller extends Controller
     {
         $validator = Validator::make($request->all(),[
             'label' => 'required',
-            
+
         ]);
 
         if($validator->fails()){

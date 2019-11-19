@@ -62,7 +62,6 @@ class BoardController extends Controller
       }
       else
         return response()->json('Board not exixt', 401);
-      }
     }
 
     /**

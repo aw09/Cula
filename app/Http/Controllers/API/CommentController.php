@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Comment;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class CommentController extends Controller
         } else {
             return response()->json($listComment, $this->successStatus);
         }
-                                    
+
         //return response()->json($listBoard, $this->successStatus);
     }
 

@@ -24,11 +24,11 @@ class CardsController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>'error']);
+            return response()->json(['error'=>$validator->errors()], 401);
         }
 
         $listCard=Cards::where('id_board', $request['id_board'])->get();
-                                    
+
         return response()->json($listCard, $this->successStatus);
     }
 
