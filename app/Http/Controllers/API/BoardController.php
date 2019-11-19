@@ -13,33 +13,11 @@ class BoardController extends Controller
 {
     public $successStatus = 200;
 
-    public function index(Request $request)
+    public function index()
     {
         $user = Auth::user();
-        $validator = Validator::make($request->all(),[
-            'id_project' => 'required',
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
-        }
-
-        $listBoard=Board::where('id_project', $request['id_project'])->get();
-        $listComplete = array();
-        foreach ($listBoard as $key) {
-          $key['card'] = $key->card;
-          foreach ($key['card'] as $k) {
-            $k->task;
-          }
-          $listComplete[] = $key;
-        }
-        if($listBoard == NULL){
-            $error='Project not found';
-            return response()->json($error, 404);
-        } else {
-            return response()->json($listBoard, $this->successStatus);
-        }
-
+        $board = Board::all();
+        return response()->json(['success'=>$board], $this->successStatus);
     }
 
     public function store(Request $request)
@@ -84,6 +62,7 @@ class BoardController extends Controller
       }
       else
         return response()->json('Board not exixt', 401);
+      }
     }
 
     /**
@@ -175,13 +154,8 @@ class BoardController extends Controller
       $validator = Validator::make($request->all(),[
           'id_project' => 'required',
       ]);
-      if($validator->fails()){
-          return response()->json(['error'=>$validator->errors()], 401);
-      }
-
-      $listProject = app(ProjectController::class)->myProject()->getData();
-      $listProject = \App\Project::hydrate($listProject);
-      $listProject = $listProject->all();
+      $listBoard = array();
+      $listProject = $user->project;
       foreach ($listProject as $p) {
         if($p->id == $request['id_project']){
           $listBoard = Board::where('id_project', $request['id_project'])->get();

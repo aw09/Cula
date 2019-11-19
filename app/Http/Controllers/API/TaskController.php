@@ -22,11 +22,11 @@ class TaskController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>'error']);
+            return response()->json(['error'=>$validator->errors()], 401);
         }
 
         $listTask=task::where('id_card', $request['id_card'])->get();
-                                    
+
         return response()->json($listTask, $this->successStatus);
     }
 

@@ -45,18 +45,20 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        $user = Auth::user();
-        if(isset($project)){
-          $listProject = $this->myProject()->getData();
-          $listProject = \App\Project::hydrate($listProject);
-          $listProject = $listProject->all();
-          if(in_array($project,$listProject))
-            return response()->json($project, $this->successStatus);
-          else
-            return response()->json('You are not a member of this project', 401);
+      $listBoard=$project->board;
+      foreach ($listBoard as $key) {
+        $key['card'] = $key->card;
+        foreach ($key['card'] as $k) {
+          $k->task;
         }
-        else
-          return response()->json('Project not exixt', 401);
+        $listComplete[] = $key;
+      }
+      if($listBoard == NULL){
+          $error='Project not found';
+          return response()->json($error, 404);
+      } else {
+          return response()->json($listBoard, $this->successStatus);
+      }
     }
 
     public function update(Request $request, Project $project){
