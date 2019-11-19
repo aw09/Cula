@@ -136,6 +136,7 @@ class GroupingController extends Controller
     }
 
     public function myTask(Request $request){
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_grouping' => 'required',
         ]);
@@ -146,7 +147,6 @@ class GroupingController extends Controller
 
         $listTask=task::where('id_grouping', $request['id_grouping'])->get();
                                     
-  
         return response()->json($listTask, $this->successStatus);
     }
 

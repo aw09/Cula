@@ -16,11 +16,20 @@ class CardsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $card = Cards::all();
-        return response()->json(['success'=>$card], $this->successStatus);
+        $validator = Validator::make($request->all(),[
+            'id_board' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $listCard=Cards::where('id_board', $request['id_board'])->get();
+                                    
+        return response()->json($listCard, $this->successStatus);
     }
 
     /**

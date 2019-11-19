@@ -14,10 +14,20 @@ class CheckListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public $successStatus = 200;
+    public function index(Request $request)
     {
-        $checkList = CheckList::all();
-        return response()->json(['success'=>$checkList], $this->successStatus);
+        $validator = Validator::make($request->all(),[
+            'id_task' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $listChecklist=CheckList::where('id_task', $request['id_task'])->get();
+                                    
+        return response()->json($listChecklist, $this->successStatus);
     }
 
     /**
