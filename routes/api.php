@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //TaskController
     Route::post('index-task', 'API\TaskController@index');
+    Route::get('show-task/{task}', 'API\TaskController@show');
     Route::post('create-task', 'API\TaskController@store');
     Route::post('add-member-task', 'API\TaskController@addMember');
     Route::put('update-task/{task}', 'API\TaskController@update');
