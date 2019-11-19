@@ -8,11 +8,28 @@ use Validator;
 use Auth;
 use DateTime;
 use App\member_of_task;
-use App\Task;
+use App\task;
 
 class TaskController extends Controller
 {
   public $successStatus = 200;
+
+  public function index(Request $request)
+    {
+        $user = Auth::user();
+        $validator = Validator::make($request->all(),[
+            'id_card' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $listTask=task::where('id_card', $request['id_card'])->get();
+                                    
+        return response()->json($listTask, $this->successStatus);
+    }
+
   public function store(Request $request)
   {
     $user = Auth::user();

@@ -7,16 +7,33 @@ use App\member_of_board;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use Auth;
 
 class BoardController extends Controller
 {
     public $successStatus = 200;
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $board = Board::all();
-        return response()->json(['success'=>$board], $this->successStatus);
+        $validator = Validator::make($request->all(),[
+            'id_project' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $listBoard=Board::where('id_project', $request['id_project'])->get();
+
+        if($listBoard == NULL){
+            $error='kosong';
+            return response()->json($error, $this->successStatus);
+        } else {
+            return response()->json($listBoard, $this->successStatus);
+        }
+                                    
+        //return response()->json($listBoard, $this->successStatus);
     }
 
     public function store(Request $request)

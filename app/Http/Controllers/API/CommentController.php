@@ -15,10 +15,27 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public $successStatus = 200;
-    public function index()
+    public function index(Request $request)
     {
-        $comment = Comment::all();
-        return response()->json(['success'=>$comment], $this->successStatus);
+        $user = Auth::user();
+        $validator = Validator::make($request->all(),[
+            'id_task' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $listComment=Comment::where('id_task', $request['id_task'])->get();
+
+        if($listComment == NULL){
+            $error='kosong';
+            return response()->json($error, $this->successStatus);
+        } else {
+            return response()->json($listComment, $this->successStatus);
+        }
+                                    
+        //return response()->json($listBoard, $this->successStatus);
     }
 
     /**
