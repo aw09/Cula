@@ -16,19 +16,9 @@ class CardsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $user = Auth::user();
-        $validator = Validator::make($request->all(),[
-            'id_board' => 'required',
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
-        }
-
-        $listCard=Cards::where('id_board', $request['id_board'])->get();
-
+        $listCard=Cards::all();
         return response()->json($listCard, $this->successStatus);
     }
 
