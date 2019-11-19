@@ -21,19 +21,25 @@ class BoardController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>'error']);
+            return response()->json(['error'=>$validator->errors()], 401);
         }
 
         $listBoard=Board::where('id_project', $request['id_project'])->get();
-
+        $listComplete = array();
+        foreach ($listBoard as $key) {
+          $key['card'] = $key->card;
+          foreach ($key['card'] as $k) {
+            $k->task;
+          }
+          $listComplete[] = $key;
+        }
         if($listBoard == NULL){
-            $error='kosong';
-            return response()->json($error, $this->successStatus);
+            $error='Project not found';
+            return response()->json($error, 404);
         } else {
             return response()->json($listBoard, $this->successStatus);
         }
-                                    
-        //return response()->json($listBoard, $this->successStatus);
+
     }
 
     public function store(Request $request)

@@ -18,12 +18,9 @@ class Cards extends Model
     }
 
     function task(){
-        return $this->hasMany('App\Task');
+        return $this->hasMany('App\Task', 'id_card');
     }
 
-    function card(){
-        return $this->hasMany('App\Card','id_card');
-    }
 
     function grouping(){
         return $this->hasMany('App\Cards', 'id_card');
