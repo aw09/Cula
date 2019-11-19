@@ -62,7 +62,6 @@ class BoardController extends Controller
       }
       else
         return response()->json('Board not exixt', 401);
-      }
     }
 
     /**
@@ -154,8 +153,13 @@ class BoardController extends Controller
       $validator = Validator::make($request->all(),[
           'id_project' => 'required',
       ]);
-      $listBoard = array();
-      $listProject = $user->project;
+      if($validator->fails()){
+          return response()->json(['error'=>$validator->errors()], 401);
+      }
+
+      $listProject = app(ProjectController::class)->myProject()->getData();
+      $listProject = \App\Project::hydrate($listProject);
+      $listProject = $listProject->all();
       foreach ($listProject as $p) {
         if($p->id == $request['id_project']){
           $listBoard = Board::where('id_project', $request['id_project'])->get();
