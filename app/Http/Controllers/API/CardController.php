@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Cards;
+use App\Card;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use Auth;
 
-class CardsController extends Controller
+class CardController extends Controller
 {
     public $successStatus = 200;
     /**
@@ -18,7 +18,7 @@ class CardsController extends Controller
      */
     public function index()
     {
-        $listCard=Cards::all();
+        $listCard=Card::all();
         return response()->json($listCard, $this->successStatus);
     }
 
@@ -51,7 +51,7 @@ class CardsController extends Controller
         }
 
         $input = $request->all();
-        $board = Cards::create($input);
+        $board = Card::create($input);
         $success['name'] =  $board->name;
 
         return response()->json(['success'=>$success], $this->successStatus);
@@ -60,22 +60,24 @@ class CardsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function show(Cards $cards)
+    public function show(Card $card)
     {
         $user = Auth::user();
-        return response()->json(['success'=>$cards], $this->successStatus);
+        $task = $card->task;
+        $card['task'] = $task;
+        return response()->json($card, $this->successStatus);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cards $cards)
+    public function edit(Card $card)
     {
 
     }
@@ -84,10 +86,10 @@ class CardsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cards  $cards
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cards $cards)
+    public function update(Request $request, Card $card)
     {
         $user = Auth::user();
         $validator = Validator::make($request->all(),[
@@ -99,17 +101,17 @@ class CardsController extends Controller
         }
 
 
-        $cards->update($request->all());
-        return response()->json(['success'=>$cards], $this->successStatus);
+        $card->update($request->all());
+        return response()->json(['success'=>$card], $this->successStatus);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cards  $cards
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cards $cards)
+    public function destroy(Card $card)
     {
       $user = Auth::user();
       $nameCard = $card->name;
@@ -120,7 +122,7 @@ class CardsController extends Controller
     public function addMember(Request $request){
         $validator = Validator::make($request->all(),[
             'id_user' => 'required',
-            'id_card' => 'required|unique:member_of_cards,id_card,NULL,NULL,id_user,'.$user->id,
+            'id_card' => 'required|unique:member_of_card,id_card,NULL,NULL,id_user,'.$user->id,
         ]);
 
         if($validator->fails()){
