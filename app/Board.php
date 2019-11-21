@@ -21,6 +21,6 @@ class Board extends Model
     }
 
     function card(){
-        return $this->hasMany('App\Cards', 'id_board');
+        return $this->hasMany('App\Card', 'id_board');
     }
 }
