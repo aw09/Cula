@@ -171,6 +171,10 @@ class TaskController extends Controller
     foreach ($task as $key) {
       $listTask = Task::where('due_date','<',$dateAWeek)->get();
     }
+    foreach ($listTask as $key) {
+      $key->card->board;
+      $task[] = $key;
+    }
 
     return response()->json($listTask, $this->successStatus);
   }

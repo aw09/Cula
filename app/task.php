@@ -26,7 +26,7 @@ class Task extends Model
   }
 
   function card(){
-    return $this->belongsTo('App\Cards', 'id_card');
+    return $this->belongsTo('App\Card', 'id_card');
   }
 
   function checkList(){

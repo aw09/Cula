@@ -40,9 +40,7 @@ class ProjectController extends Controller
         $req = new Request($req);
         $this->addMember($req);
 
-        $success['name'] =  $project->name;
-
-        return response()->json(['success'=>$success], $this->successStatus);
+        return response()->json($project, $this->successStatus);
     }
 
     public function show(Project $project)

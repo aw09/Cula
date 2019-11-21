@@ -54,12 +54,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('board-of-project', 'API\BoardController@boardOfProject');
 
     //CardsController
-    Route::resource('card', 'API\CardsController');
+    Route::resource('card', 'API\CardController');
     Route::post('card/member', 'API\CardController@addMember');
     Route::get('card/member/{card}', 'API\CardController@getMember');
     Route::post('card/member/delete', 'API\CardController@deleteMember');
     Route::get('myCard', 'API\CardController@myCard');
-    Route::get('myCard', 'API\CardsController@myCard');
 
     //GroupingController
     Route::resource('grouping', 'API\GroupingController');

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cards extends Model
+class Card extends Model
 {
     use SoftDeletes;
     protected $fillable = [
@@ -25,7 +25,7 @@ class Cards extends Model
 
 
     function grouping(){
-        return $this->hasMany('App\Cards', 'id_card');
+        return $this->hasMany('App\Grouping', 'id_card');
     }
 
 }
