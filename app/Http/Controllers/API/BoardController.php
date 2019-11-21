@@ -50,6 +50,7 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
+      $listComplete = array();
       $listCard=$board->card;
       foreach ($listCard as $key) {
         $key['task'] = $key->task;
