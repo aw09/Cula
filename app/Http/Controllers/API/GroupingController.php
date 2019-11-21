@@ -91,7 +91,7 @@ class GroupingController extends Controller
     public function update(Request $request, Grouping $grouping)
     {
         $validator = Validator::make($request->all(),[
-            'id_card' => 'required',
+            //'id_card' => 'required',
             'grouping' => 'required',
             
         ]);
