@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     //GroupingController
     Route::resource('grouping', 'API\GroupingController');
     Route::post('add-grouping', 'API\GroupingController@addTask');
-    Route::post('list-groupinglist-grouping', 'API\GroupingController@myTask');
+    Route::post('groupinglist', 'API\GroupingController@myTask');
 
     //CheacklistController
     Route::resource('checklist', 'API\CheckListController');
