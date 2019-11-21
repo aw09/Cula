@@ -39,27 +39,26 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //TaskController
     Route::resource('task', 'API\TaskController');
-    Route::post('task/member/{user}', 'API\TaskController@addMember');
-    Route::get('task/member', 'API\TaskController@getMember');
+    Route::post('task/member', 'API\TaskController@addMember');
+    Route::get('task/member/{task}', 'API\TaskController@getMember');
     Route::post('task/member/delete', 'API\TaskController@deleteMember');
-    Route::get('roadmap', 'API\TaskController@myTask');
-    Route::get('reminder', 'API\TaskController@myUrgentTask');
     Route::get('myTask', 'API\TaskController@myTask'); //Roadmap
     Route::get('myUrgentTask', 'API\TaskController@myUrgentTask'); //Reminder
 
     //BoardController
     Route::resource('board', 'API\BoardController');
     Route::post('board/member', 'API\BoardController@addMember');
-    Route::get('board/member', 'API\BoardController@getMember');
+    Route::get('board/member/{board}', 'API\BoardController@getMember');
     Route::post('board/member/delete', 'API\BoardController@deleteMember');
     Route::get('myBoard', 'API\BoardController@myBoard');
     Route::post('board-of-project', 'API\BoardController@boardOfProject');
 
     //CardsController
     Route::resource('card', 'API\CardsController');
-    Route::post('card/member', 'API\CardsController@addMember');
-    Route::get('card/member', 'API\CardsController@getMember');
-    Route::post('card/member/delete', 'API\CardsController@deleteMember');
+    Route::post('card/member', 'API\CardController@addMember');
+    Route::get('card/member/{card}', 'API\CardController@getMember');
+    Route::post('card/member/delete', 'API\CardController@deleteMember');
+    Route::get('myCard', 'API\CardController@myCard');
     Route::get('myCard', 'API\CardsController@myCard');
 
     //GroupingController

@@ -124,19 +124,23 @@ class BoardController extends Controller
     }
 
     public function deleteMember(Request $request){
-        $validator = Validator::make($request->all(),[
-            'id_user' => 'required',
-            'id_board' => 'required',
-        ]);
+      $validator = Validator::make($request->all(),[
+          'id_user' => 'required',
+          'id_board' => 'required',
+      ]);
+      $nameUser = User::find($request->id_user);
+      $nameBoard = Board::find($request->id_board);
+      if($validator->fails()){
+          return response()->json(['error'=>$validator->errors()], 401);
+      }
 
-        if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
-        }
+      member_of_board::where('id_user', $request['id_user'])
+                                  ->where('id_board', $request['id_board'])->delete();
 
-        member_of_board::where('id_user', $request['id_user'])
-                                    ->where('id_board', $request['id_board'])->delete();;
 
-        return response()->json(['success'=>'Success'], $this->successStatus);
+
+      return response()->json("User '".$nameUser."' deleted from Board '".$nameBoard."'", $this->successStatus);
+
     }
 
     public function myBoard(){
