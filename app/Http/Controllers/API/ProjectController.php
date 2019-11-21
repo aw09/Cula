@@ -84,7 +84,7 @@ class ProjectController extends Controller
         $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_user' => 'required',
-            'id_project' => 'required|unique:member_of_projects,id_user,NULL,NULL,id_user,'.$user->id,
+            'id_project' => 'required|unique:member_of_projects,id_user,'.$request->id_user,'id_project'.$request->id_project,
         ]);
 
         if($validator->fails()){
