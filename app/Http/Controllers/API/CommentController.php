@@ -6,6 +6,7 @@ use App\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use Auth;
 
 class CommentController extends Controller
 {
@@ -130,5 +131,26 @@ class CommentController extends Controller
     {
         $comment->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
+    }
+
+    public function listOfComment(Request $request){
+        $user = Auth::user();
+        $validator = Validator::make($request->all(),[
+            'id_task' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $listComment=Comment::where('id_task', $request['id_task'])->get();
+
+        if($listComment == NULL){
+            $error='kosong';
+            return response()->json($error, $this->successStatus);
+        } else {
+            return response()->json($listComment, $this->successStatus);
+        }
+
     }
 }
