@@ -135,7 +135,9 @@ class ProjectController extends Controller
       $listProject = array();
       $project = $user->project;
       foreach ($project as $key) {
-        $listProject[] = Project::find($key->id_project);
+        $query = Project::find($key->id_project);
+        if(isset($query))
+          $listProject[] = $query;
       }
       // dd($listProject);
 
