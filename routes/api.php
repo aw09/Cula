@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('project', 'API\ProjectController');
     Route::post('project/member', 'API\ProjectController@addMember');
     Route::get('project/member/{project}', 'API\ProjectController@getMember');
-    Route::delete('project/member', 'API\ProjectController@deleteMember');
+    Route::post('project/member/delete', 'API\ProjectController@deleteMember');
     Route::get('myProject', 'API\ProjectController@myProject');
     Route::post('boardOfProject', 'API\ProjectController@boardOfProject');
 
@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('task', 'API\TaskController');
     Route::post('task/member/{user}', 'API\TaskController@addMember');
     Route::get('task/member', 'API\TaskController@getMember');
-    Route::delete('task/member/{user}', 'API\TaskController@deleteMember');
+    Route::post('task/member/delete', 'API\TaskController@deleteMember');
     Route::get('roadmap', 'API\TaskController@myTask');
     Route::get('reminder', 'API\TaskController@myUrgentTask');
     Route::get('myTask', 'API\TaskController@myTask'); //Roadmap
@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('board', 'API\BoardController');
     Route::post('board/member', 'API\BoardController@addMember');
     Route::get('board/member', 'API\BoardController@getMember');
-    Route::delete('board/member/{user}', 'API\BoardController@deleteMember');
+    Route::post('board/member/delete', 'API\BoardController@deleteMember');
     Route::get('myBoard', 'API\BoardController@myBoard');
     Route::post('board-of-project', 'API\BoardController@boardOfProject');
 
@@ -59,7 +59,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('card', 'API\CardsController');
     Route::post('card/member', 'API\CardsController@addMember');
     Route::get('card/member', 'API\CardsController@getMember');
-    Route::delete('card/member/{user}', 'API\CardsController@deleteMember');
+    Route::post('card/member/delete', 'API\CardsController@deleteMember');
     Route::get('myCard', 'API\CardsController@myCard');
 
     //GroupingController

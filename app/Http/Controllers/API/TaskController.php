@@ -95,20 +95,22 @@ class TaskController extends Controller
   }
 
   public function addMember(Request $request){
-      $user = Auth::user();
-      $validator = Validator::make($request->all(),[
-          'id_user' => 'required',
-          'id_task' => 'required|unique:member_of_tasks,id_task,NULL,NULL,id_user,'.$user->id,
-      ]);
+    $user = Auth::user();
+    $validator = Validator::make($request->all(),[
+        'id_user' => 'required|unique_with:member_of_tasks, id_task',
+        'id_task' => 'required',
+    ]);
 
-      if($validator->fails()){
-          return response()->json(['error'=>$validator->errors()], 401);
-      }
+    if($validator->fails()){
+        return response()->json([$validator->errors()], 401);
+    }
+    $nameUser = User::find($request->id_user)->name;
+    $nameTask = Task::find($request->id_task)->name;
+    $input = $request->all();
+    $memberTask = member_of_task::create($input);
 
-      $input = $request->all();
-      $memberTask = member_of_task::create($input);
+    return response()->json(["User '".$nameUser."' added to Task '".$nameTask."'"], $this->successStatus);
 
-      return response()->json(['success'=>'success'], $this->successStatus);
   }
 
   public function deleteMember(Request $request){
