@@ -84,21 +84,22 @@ class ProjectController extends Controller
     }
 
     public function addMember(Request $request){
-        $user = Auth::user();
-        $validator = Validator::make($request->all(),[
-            'id_user' => 'required|unique_with:member_of_projects, id_project',
-            'id_project' => 'required',
-        ]);
-
-        if($validator->fails()){
-            return response()->json([$validator->errors()], 401);
-        }
-        $nameUser = User::find($request->id_user)->name;
-        $nameProject = Project::find($request->id_project)->name;
-        $input = $request->all();
-        $memberBoard = member_of_project::create($input);
-
-        return response()->json(["User '".$nameUser."' added to Project '".$nameProject."'"], $this->successStatus);
+      dd('Check');
+        // $user = Auth::user();
+        // $validator = Validator::make($request->all(),[
+        //     'id_user' => 'required|unique_with:member_of_projects, id_project',
+        //     'id_project' => 'required',
+        // ]);
+        //
+        // if($validator->fails()){
+        //     return response()->json([$validator->errors()], 401);
+        // }
+        // $nameUser = User::find($request->id_user)->name;
+        // $nameProject = Project::find($request->id_project)->name;
+        // $input = $request->all();
+        // $memberBoard = member_of_project::create($input);
+        //
+        // return response()->json(["User '".$nameUser."' added to Project '".$nameProject."'"], $this->successStatus);
     }
 
     public function getMember(Request $request){
