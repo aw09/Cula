@@ -17,17 +17,8 @@ class TaskController extends Controller
   public function index(Request $request)
     {
         $user = Auth::user();
-        $validator = Validator::make($request->all(),[
-            'id_card' => 'required',
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
-        }
-
-        $listTask=task::where('id_card', $request['id_card'])->get();
-
-        return response()->json($listTask, $this->successStatus);
+        $task = Task::all();
+        return response()->json($task, $this->successStatus);
     }
 
   public function store(Request $request)
@@ -98,8 +89,9 @@ class TaskController extends Controller
   public function destroy(Task $task)
   {
     $user = Auth::user();
-      $task->delete();
-      return response()->json(['success'=>'Success'], $this->successStatus);
+    $nameTask = $task->name;
+    $task->delete();
+    return response()->json("Task '".$nameTask."' deleted", $this->successStatus);
   }
 
   public function addMember(Request $request){

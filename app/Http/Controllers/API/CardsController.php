@@ -111,9 +111,11 @@ class CardsController extends Controller
      */
     public function destroy(Cards $cards)
     {
-        $user = Auth::user();
-        $cards->delete();
-        return response()->json(['success'=>'Success'], $this->successStatus);
+      $user = Auth::user();
+      $nameCard = $card->name;
+      $card->delete();
+      return response()->json("Card '".$nameCard."' deleted", $this->successStatus);
+
     }
     public function addMember(Request $request){
         $validator = Validator::make($request->all(),[

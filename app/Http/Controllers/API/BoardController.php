@@ -18,7 +18,7 @@ class BoardController extends Controller
     {
         $user = Auth::user();
         $board = Board::all();
-        return response()->json(['success'=>$board], $this->successStatus);
+        return response()->json($board, $this->successStatus);
     }
 
     public function store(Request $request)
@@ -100,8 +100,9 @@ class BoardController extends Controller
     public function destroy(Board $board)
     {
         $user = Auth::user();
+        $nameBoard = $board->name;
         $board->delete();
-        return response()->json(['success'=>'Success'], $this->successStatus);
+        return response()->json("Board '".$nameBoard."' deleted", $this->successStatus);
     }
 
     public function addMember(Request $request){
