@@ -101,15 +101,8 @@ class ProjectController extends Controller
         return response()->json(["User '".$nameUser."' added to Project '".$nameProject."'"], $this->successStatus);
     }
 
-    public function getMember(Request $request){
+    public function getMember(Project $project){
       $user = Auth::user();
-      $validator = Validator::make($request->all(),[
-          'id_project' => 'required'
-      ]);
-      if($validator->fails()){
-          return response()->json(['error'=>$validator->errors()], 401);
-      }
-      $project = Project::find($request->id_project);
       if(isset($project)){
         $member = $project->user;
         return response()->json($member, $this->successStatus);
