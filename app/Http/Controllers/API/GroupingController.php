@@ -7,6 +7,7 @@ use App\task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use Auth;
 
 class GroupingController extends Controller
 {
@@ -20,6 +21,7 @@ class GroupingController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
         $label = Grouping::all();
         return response()->json(['success'=>$label], $this->successStatus);
     }
@@ -42,6 +44,7 @@ class GroupingController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_card' => 'required',
             'grouping' => 'required',
@@ -67,6 +70,7 @@ class GroupingController extends Controller
      */
     public function show(Grouping $grouping)
     {
+        $user = Auth::user();
         return response()->json(['success'=>$grouping], $this->successStatus);
     }
 
@@ -90,6 +94,7 @@ class GroupingController extends Controller
      */
     public function update(Request $request, Grouping $grouping)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             //'id_card' => 'required',
             'grouping' => 'required',
@@ -113,11 +118,13 @@ class GroupingController extends Controller
      */
     public function destroy(Grouping $grouping)
     {
+        $user = Auth::user();
         $grouping->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
 
     public function addTask(Request $request){
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'id_task' => 'required',
             'id_grouping' => 'required',
