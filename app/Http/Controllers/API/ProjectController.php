@@ -84,12 +84,12 @@ class ProjectController extends Controller
     public function addMember(Request $request){
         $user = Auth::user();
         $validator = Validator::make($request->all(),[
-            'id_user' => 'required',
-            'id_project' => 'required|unique:member_of_projects,id_user,NULL,NULL,id_user,'.$user->id,
+            'id_user' => 'required|unique_with:member_of_projects, id_project',
+            'id_project' => 'required',
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json([$validator->errors()], 401);
         }
 
         $input = $request->all();
