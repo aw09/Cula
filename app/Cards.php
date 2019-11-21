@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cards extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
-        'id', 'name', 'id_board',
+        'name', 'id_board',
     ];
     function user(){
   		return $this->hasMany('App\member_of_card','id_card');

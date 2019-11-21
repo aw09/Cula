@@ -91,7 +91,6 @@ class CardsController extends Controller
     {
         $user = Auth::user();
         $validator = Validator::make($request->all(),[
-            'id' => 'required',
             'name' => 'required',
         ]);
 
@@ -99,9 +98,9 @@ class CardsController extends Controller
             return response()->json(['error'=>$validator->errors()], 401);
         }
 
-        $card->update($request->all());
-        $success =  $card;
-        return response()->json(['success'=>$success], $this->successStatus);
+
+        $cards->update($request->all());
+        return response()->json(['success'=>$cards], $this->successStatus);
     }
 
     /**

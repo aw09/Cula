@@ -76,8 +76,9 @@ class ProjectController extends Controller
     }
 
     public function destroy(Project $project){
+        $name = $project->name;
         $project->delete();
-        return response()->json(['success'=>'Success'], $this->successStatus);
+        return response()->json(['Project '.$name.' deleted'], $this->successStatus);
     }
 
     public function addMember(Request $request){
