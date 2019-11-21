@@ -137,8 +137,8 @@ class CardsController extends Controller
           'id_user' => 'required',
           'id_card' => 'required',
       ]);
-      $nameUser = User::find($request->id_user);
-      $nameCard = Card::find($request->id_card);
+      $nameUser = User::find($request->id_user)->name;
+      $nameCard = Card::find($request->id_card)->name;
       if($validator->fails()){
           return response()->json(['error'=>$validator->errors()], 401);
       }

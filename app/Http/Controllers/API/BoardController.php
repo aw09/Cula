@@ -128,8 +128,8 @@ class BoardController extends Controller
           'id_user' => 'required',
           'id_board' => 'required',
       ]);
-      $nameUser = User::find($request->id_user);
-      $nameBoard = Board::find($request->id_board);
+      $nameUser = User::find($request->id_user)->name;
+      $nameBoard = Board::find($request->id_board)->name;
       if($validator->fails()){
           return response()->json(['error'=>$validator->errors()], 401);
       }
