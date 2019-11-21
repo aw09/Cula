@@ -100,8 +100,8 @@ class GroupingController extends Controller
             return response()->json(['error'=>'error']);
         }
 
-        $label->update($request->all());
-        $success =  $label;
+        $grouping->update($request->all());
+        $success =  $grouping;
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
