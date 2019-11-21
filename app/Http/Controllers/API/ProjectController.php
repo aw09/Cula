@@ -116,7 +116,8 @@ class ProjectController extends Controller
             'id_user' => 'required',
             'id_project' => 'required',
         ]);
-
+        $nameUser = User::find($request->id_user);
+        $nameProject = Project::find($request->id_project);
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()], 401);
         }
@@ -126,7 +127,7 @@ class ProjectController extends Controller
 
 
 
-        return response()->json(['success'=>'Success'], $this->successStatus);
+        return response()->json("User '".$nameUser."' deleted from Project '".$nameProject."'", $this->successStatus);
     }
 
     public function myProject(){

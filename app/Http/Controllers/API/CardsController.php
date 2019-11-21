@@ -132,6 +132,25 @@ class CardsController extends Controller
 
         return response()->json(['success'=>'success'], $this->successStatus);
     }
+    public function deleteMember(Request $request){
+      $validator = Validator::make($request->all(),[
+          'id_user' => 'required',
+          'id_card' => 'required',
+      ]);
+      $nameUser = User::find($request->id_user);
+      $nameCard = Card::find($request->id_card);
+      if($validator->fails()){
+          return response()->json(['error'=>$validator->errors()], 401);
+      }
+
+      member_of_card::where('id_user', $request['id_user'])
+                                  ->where('id_card', $request['id_card'])->delete();
+
+
+
+      return response()->json("User '".$nameUser."' deleted from Card '".$nameCard."'", $this->successStatus);
+
+    }
     public function myCard(){
       $user = Auth::user();
       $listCard = array();

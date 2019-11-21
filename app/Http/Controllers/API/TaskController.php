@@ -118,15 +118,19 @@ class TaskController extends Controller
         'id_user' => 'required',
         'id_task' => 'required',
     ]);
-
+    $nameUser = User::find($request->id_user);
+    $nameTask = Task::find($request->id_task);
     if($validator->fails()){
         return response()->json(['error'=>$validator->errors()], 401);
     }
 
-    member_of_board::where('id_user', $request['id_user'])
-                                ->where('id_task', $request['id_task'])->delete();;
+    member_of_task::where('id_user', $request['id_user'])
+                                ->where('id_task', $request['id_task'])->delete();
 
-    return response()->json(['success'=>'Success'], $this->successStatus);
+
+
+    return response()->json("User '".$nameUser."' deleted from Task '".$nameTask."'", $this->successStatus);
+
 }
 
   public function getMember(Request $request){
