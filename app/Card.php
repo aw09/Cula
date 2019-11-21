@@ -25,7 +25,7 @@ class Card extends Model
 
 
     function grouping(){
-        return $this->hasMany('App\Cards', 'id_card');
+        return $this->hasMany('App\Grouping', 'id_card');
     }
 
 }
