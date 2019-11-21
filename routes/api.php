@@ -75,6 +75,8 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //LabelController
     Route::resource('label', 'API\LabelController');
+    Route::post('add-label', 'API\LabelController@addTask');
+    Route::post('remove-label', 'API\LabelController@removeTask');
 
     //LinkController
     Route::resource('link', 'API\LinkController');

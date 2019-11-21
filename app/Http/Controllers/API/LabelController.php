@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Label;
+use App\task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use Auth;
 
 class LabelController extends Controller
 {
@@ -17,6 +19,7 @@ class LabelController extends Controller
     public $successStatus = 200;
     public function index()
     {
+        $user = Auth::user();
         $label = Label::all();
         return response()->json(['success'=>$label], $this->successStatus);
     }
@@ -39,6 +42,7 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'label' => 'required',
         ]);
@@ -63,6 +67,7 @@ class LabelController extends Controller
      */
     public function show($label)
     {
+        $user = Auth::user();
         return response()->json(['success'=>$label], $this->successStatus);
     }
 
@@ -86,6 +91,7 @@ class LabelController extends Controller
      */
     public function update(Request $request, Label $label)
     {
+        $user = Auth::user();
         $validator = Validator::make($request->all(),[
             'label' => 'required',
 
@@ -108,7 +114,46 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
+        $user = Auth::user();
         $label->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
+    }
+
+    public function addTask(Request $request){
+        $user = Auth::user();
+        $validator = Validator::make($request->all(),[
+            'id_task' => 'required',
+            'id_label' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $task = task::find($request->id_task);
+        
+        $task->id_label = $request->id_label;
+        $task->save();
+        return response()->json(['success'=>'Success'], $this->successStatus);
+
+    }
+
+    public function removeTask(Request $request){
+        $user = Auth::user();
+        $validator = Validator::make($request->all(),[
+            'id_task' => 'required',
+            //'id_label' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $task = task::find($request->id_task);
+        
+        $task->id_label = NULL;
+        $task->save();
+        return response()->json(['success'=>'Success'], $this->successStatus);
+
     }
 }
