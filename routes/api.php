@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //CommentController
     Route::resource('comment', 'API\CommentController');
+    Route::post('commentlist', 'API\CommentController@listOfComment');
 
     //LabelController
     Route::resource('label', 'API\LabelController');
