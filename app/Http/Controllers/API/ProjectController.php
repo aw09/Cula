@@ -116,8 +116,8 @@ class ProjectController extends Controller
             'id_user' => 'required',
             'id_project' => 'required',
         ]);
-        $nameUser = User::find($request->id_user);
-        $nameProject = Project::find($request->id_project);
+        $nameUser = User::find($request->id_user)->name;
+        $nameProject = Project::find($request->id_project)->name;
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()], 401);
         }
@@ -135,7 +135,9 @@ class ProjectController extends Controller
       $listProject = array();
       $project = $user->project;
       foreach ($project as $key) {
-        $listProject[] = Project::find($key->id_project);
+        $query = Project::find($key->id_project);
+        if(isset($query))
+          $listProject[] = $query;
       }
       // dd($listProject);
 

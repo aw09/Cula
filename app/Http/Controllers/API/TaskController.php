@@ -118,8 +118,8 @@ class TaskController extends Controller
         'id_user' => 'required',
         'id_task' => 'required',
     ]);
-    $nameUser = User::find($request->id_user);
-    $nameTask = Task::find($request->id_task);
+    $nameUser = User::find($request->id_user)->name;
+    $nameTask = Task::find($request->id_task)->name;
     if($validator->fails()){
         return response()->json(['error'=>$validator->errors()], 401);
     }
