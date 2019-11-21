@@ -47,7 +47,7 @@ class TaskController extends Controller
       $req['id_task'] = $task->id;
 
       $memberTask = member_of_task::create($req);
-      $success =  $task->task;
+      $success['name'] =  $task->task;
 
       return response()->json(['success'=>$success], $this->successStatus);
   }
