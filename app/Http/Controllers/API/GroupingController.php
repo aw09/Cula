@@ -142,6 +142,26 @@ class GroupingController extends Controller
 
     }
 
+    public function removeTask(Request $request){
+        $user = Auth::user();
+        $validator = Validator::make($request->all(),[
+            'id_task' => 'required',
+            //'id_grouping' => 'required',
+        ]);
+        //dd($request);
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $task = task::find($request->id_task);
+        
+        $task->id_grouping = NULL;
+        $task->save();
+        //dd($task);
+        return response()->json(['success'=>'Success'], $this->successStatus);
+
+    }
+
     public function myTask(Request $request){
         $user = Auth::user();
         $validator = Validator::make($request->all(),[

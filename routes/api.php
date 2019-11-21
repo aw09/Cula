@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('grouping', 'API\GroupingController');
     Route::post('add-grouping', 'API\GroupingController@addTask');
     Route::post('groupinglist', 'API\GroupingController@myTask');
+    Route::post('remove-grouping', 'API\GroupingController@removeTask');
 
     //CheacklistController
     Route::resource('checklist', 'API\CheckListController');
@@ -73,6 +74,8 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //LabelController
     Route::resource('label', 'API\LabelController');
+    Route::post('add-label', 'API\LabelController@addTask');
+    Route::post('remove-label', 'API\LabelController@removeTask');
 
     //LinkController
     Route::resource('link', 'API\LinkController');
