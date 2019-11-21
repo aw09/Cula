@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Project;
 use Illuminate\Support\Facades\Auth;
-use App\member_of_project;
 use App\Http\Controllers\Controller;
 use Validator;
+use App\Project;
+use App\member_of_project;
+use App\User;
+
 
 class ProjectController extends Controller
 {
@@ -76,36 +78,31 @@ class ProjectController extends Controller
     }
 
     public function destroy(Project $project){
+        $name = $project->name;
         $project->delete();
-        return response()->json(['success'=>'Success'], $this->successStatus);
+        return response()->json(['Project '.$name.' deleted'], $this->successStatus);
     }
 
     public function addMember(Request $request){
         $user = Auth::user();
         $validator = Validator::make($request->all(),[
-            'id_user' => 'required',
-            'id_project' => 'required|unique:member_of_projects,id_user,'.$request->id_user,'id_project'.$request->id_project,
+            'id_user' => 'required|unique_with:member_of_projects, id_project',
+            'id_project' => 'required',
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
+            return response()->json([$validator->errors()], 401);
         }
-
+        $nameUser = User::find($request->id_user)->name;
+        $nameProject = Project::find($request->id_project)->name;
         $input = $request->all();
         $memberBoard = member_of_project::create($input);
 
-        return response()->json(['success'=>'success'], $this->successStatus);
+        return response()->json(["User '".$nameUser."' added to Project '".$nameProject."'"], $this->successStatus);
     }
 
-    public function getMember(Request $request){
+    public function getMember(Project $project){
       $user = Auth::user();
-      $validator = Validator::make($request->all(),[
-          'id_project' => 'required'
-      ]);
-      if($validator->fails()){
-          return response()->json(['error'=>$validator->errors()], 401);
-      }
-      $project = Project::find($request->id_project);
       if(isset($project)){
         $member = $project->user;
         return response()->json($member, $this->successStatus);
