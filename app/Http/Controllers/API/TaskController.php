@@ -154,10 +154,11 @@ class TaskController extends Controller
       $listTask = array();
       $task = $user->task;
       foreach ($task as $key) {
-        $key = $key->task;
-        $key['id_board'] = intval($key->card->board->id);
-        $key['id_project'] = intval($key->card->board->project->id);
-        $listTask[] = $key;
+        if(isset($key->task))
+          if(isset($key->task->card))
+            if(isset($key->task->card->board))
+              if(isset($key->task->card->board->project))
+                $listTask[] = $key;
       }
       return response()->json($listTask, $this->successStatus);
   }
