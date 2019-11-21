@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Project;
 use Illuminate\Support\Facades\Auth;
-use App\member_of_project;
 use App\Http\Controllers\Controller;
 use Validator;
+use App\Project;
+use App\member_of_project;
+use App\User;
+
 
 class ProjectController extends Controller
 {
@@ -91,11 +93,12 @@ class ProjectController extends Controller
         if($validator->fails()){
             return response()->json([$validator->errors()], 401);
         }
-
+        $nameUser = User::find($request->id_user)->name;
+        $nameProject = Project::find($request->id_project)->name;
         $input = $request->all();
         $memberBoard = member_of_project::create($input);
 
-        return response()->json(['success'=>'success'], $this->successStatus);
+        return response()->json(["User '".$nameUser."' added to Project '".$nameProject."'"], $this->successStatus);
     }
 
     public function getMember(Request $request){
