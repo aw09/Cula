@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //BoardController
     Route::resource('board', 'API\BoardController');
-    Route::post('board/member/{user}', 'API\BoardController@addMember');
+    Route::post('board/member', 'API\BoardController@addMember');
     Route::get('board/member', 'API\BoardController@getMember');
     Route::delete('board/member/{user}', 'API\BoardController@deleteMember');
     Route::get('myBoard', 'API\BoardController@myBoard');
@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //CardsController
     Route::resource('card', 'API\CardsController');
-    Route::post('card/member/{user}', 'API\CardsController@addMember');
+    Route::post('card/member', 'API\CardsController@addMember');
     Route::get('card/member', 'API\CardsController@getMember');
     Route::delete('card/member/{user}', 'API\CardsController@deleteMember');
     Route::get('myCard', 'API\CardsController@myCard');

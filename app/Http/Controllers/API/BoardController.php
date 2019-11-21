@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Board;
 use App\member_of_board;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
@@ -104,20 +105,21 @@ class BoardController extends Controller
     }
 
     public function addMember(Request $request){
-        $user = Auth::user();
-        $validator = Validator::make($request->all(),[
-            'id' => 'required',
-            'id_board' => 'required|unique:member_of_boards,id_board,NULL,NULL,id_user,'.$user->id,
-        ]);
+      $user = Auth::user();
+      $validator = Validator::make($request->all(),[
+          'id_user' => 'required|unique_with:member_of_boards, id_board',
+          'id_board' => 'required',
+      ]);
 
-        if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()], 401);
-        }
+      if($validator->fails()){
+          return response()->json([$validator->errors()], 401);
+      }
+      $nameUser = User::find($request->id_user)->name;
+      $nameBoard = Board::find($request->id_board)->name;
+      $input = $request->all();
+      $memberBoard = member_of_board::create($input);
 
-        $input = $request->all();
-        $memberBoard = member_of_board::create($input);
-
-        return response()->json(['success'=>'success'], $this->successStatus);
+      return response()->json(["User '".$nameUser."' added to Board '".$nameBoard."'"], $this->successStatus);
     }
 
     public function deleteMember(Request $request){
