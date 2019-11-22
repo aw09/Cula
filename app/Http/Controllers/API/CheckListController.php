@@ -121,4 +121,19 @@ class CheckListController extends Controller
         $checkList->delete();
         return response()->json(['success'=>'Success'], $this->successStatus);
     }
+
+    public function listOfChecklist(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'id_task' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['error'=>'error']);
+        }
+
+        $listChecklist=CheckList::where('id_task', $request['id_task'])->get();
+                                    
+        return response()->json($listChecklist, $this->successStatus);
+    }
 }
