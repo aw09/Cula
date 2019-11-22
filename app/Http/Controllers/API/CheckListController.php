@@ -98,7 +98,7 @@ class CheckListController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'id_task' => 'required',
-            'name' => 'required',
+            'check_list' => 'required',
         ]);
 
         if($validator->fails()){
