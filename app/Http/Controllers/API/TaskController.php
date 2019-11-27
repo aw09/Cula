@@ -8,7 +8,8 @@ use Validator;
 use Auth;
 use DateTime;
 use App\member_of_task;
-use App\task;
+use App\Task;
+use App\User;
 
 class TaskController extends Controller
 {
