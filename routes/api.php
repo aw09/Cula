@@ -68,6 +68,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //CheacklistController
     Route::resource('checklist', 'API\CheckListController');
+    Route::post('checklist-list', 'API\CheckListController@listOfChecklist');
 
     //CommentController
     Route::resource('comment', 'API\CommentController');
