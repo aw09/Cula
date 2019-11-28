@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+// Route::get('/email', function () {
+//     return view('email');
+// });
+Route::get('/email', 'EmailController@sendEmail');
