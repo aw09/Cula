@@ -14,8 +14,8 @@ class Task extends Model
    * @var array
    */
   protected $fillable = [
-      'ID_ROLE', 'id_card', 'task', 'detail_of_task', 'DUE_DATE_TASK',
-      'START_DATE_TASK', 'FINISH_DATE_TASK', 'ID_LABEL', 'id_grouping'
+      'id_role', 'id_card', 'task', 'detail_of_task', 'due_date',
+      'start_date', 'finish_date', 'id_label', 'id_grouping'
   ];
   function user(){
 		return $this->hasMany('App\member_of_task','id_task');

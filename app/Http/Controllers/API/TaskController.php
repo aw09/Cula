@@ -184,11 +184,15 @@ class TaskController extends Controller
     $listTask = array();
     $task = $user->task;
     foreach ($task as $key) {
-      $listTask = Task::where('due_date','<',$dateAWeek)->get();
+      $key = $key->task;
+      $taskUrgent = Task::where('due_date','<',$dateAWeek)->get();
+      foreach ($taskUrgent as $temp) {
+        if($key==$temp)
+          $listTask[] = $key;
+      }
     }
     foreach ($listTask as $key) {
       $key->card->board;
-      $task[] = $key;
     }
 
     return response()->json($listTask, $this->successStatus);
