@@ -15,7 +15,7 @@ class Grouping extends Model
       }
 
       function grouping(){
-        return $this->belongsTo('App\Cards', 'id_card');
+        return $this->belongsTo('App\Card', 'id_card');
       }
 
 

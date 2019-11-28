@@ -54,14 +54,26 @@ class BoardController extends Controller
       $listComplete = array();
       $listCard=$board->card;
       foreach ($listCard as $key) {
-        $key['task'] = $key->task;
+        $group = $key->grouping;
+        foreach ($group as $g) {
+          $g->task;
+          $key['group'] = $g;
+        }
+        $ungroup = $key->task;
+        foreach ($ungroup as $u) {
+          if($u->id_grouping==NULL)
+            $key['ungroup'] = $u;
+        }
+        $board['card'] = $listComplete;
         $listComplete[] = $key;
+        $collection = collect($board);
+        $collection->forget($board->grouping);
       }
       if($listCard == NULL){
           $error='Project not found';
           return response()->json($error, 404);
       } else {
-          return response()->json($listComplete, $this->successStatus);
+          return response()->json($collection, $this->successStatus);
       }
     }
 

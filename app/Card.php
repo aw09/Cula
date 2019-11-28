@@ -20,7 +20,7 @@ class Card extends Model
     }
 
     function task(){
-        return $this->hasMany('App\Task', 'id_card');
+        return $this->hasMany('App\task', 'id_card');
     }
 
 
