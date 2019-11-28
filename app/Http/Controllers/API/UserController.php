@@ -31,6 +31,7 @@ class UserController extends Controller
             return response()->json(['Email and Password doesnt match'], 401);
         }
     }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -53,6 +54,21 @@ class UserController extends Controller
         $inputPicture['picture'] = "dummy";
         $picture = UserPicture::create($inputPicture);
         return response()->json(['success'=>$success['token']]);
+    }
+
+    public function update(Request $request)
+    {
+            $user = Auth::user();
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,'.$user->id,
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 401);
+            }
+            $user->update($request->all());
+            $success =  $user;
+            return response()->json(['success'=>$success], $this->successStatus);
     }
 
     public function changePassword(Request $request){
