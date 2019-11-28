@@ -51,7 +51,18 @@ class TaskController extends Controller
    */
   public function show(Task $task)
   {
-      return response()->json($task, $this->successStatus);
+    $listComplete = array();
+      //$listCard=$task->checklist;
+      foreach ($task as $key) {
+        $key['task'] = $key->checkList;
+        $listComplete[] = $key;
+      }
+      if($listCard == NULL){
+          $error='Project not found';
+          return response()->json($error, 404);
+      } else {
+          return response()->json($listComplete, $this->successStatus);
+      }
   }
 
   /**

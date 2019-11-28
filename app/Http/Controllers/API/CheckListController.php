@@ -118,8 +118,9 @@ class CheckListController extends Controller
      */
     public function destroy(CheckList $checkList)
     {
+        $nameBoard = $checkList->checklist;
         $checkList->delete();
-        return response()->json(['success'=>'Success'], $this->successStatus);
+        return response()->json("Check list '".$nameBoard."' deleted", $this->successStatus);
     }
 
     public function listOfChecklist(Request $request)
