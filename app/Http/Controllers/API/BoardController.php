@@ -55,6 +55,8 @@ class BoardController extends Controller
       $listCard=$board->card;
       foreach ($listCard as $key) {
         $group = $key->grouping;
+        $key['ungroup'] = NULL;
+        $key['group'] = NULL;
         foreach ($group as $g) {
           $g->task;
           $key['group'] = $g;
