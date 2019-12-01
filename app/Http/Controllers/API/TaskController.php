@@ -62,6 +62,9 @@ class TaskController extends Controller
     $listComplete['link'] = $task->link;
     $listComplete['check_list'] = $task->checkList;
     $listComplete['comment'] = $task->comment;
+    foreach ($listComplete['comment'] as $key) {
+      $key->user;
+    }
     $listComplete['id_label'] = $listComplete->label;
 
       if($listComplete == NULL){

@@ -12,5 +12,8 @@ class Comment extends Model
 
     function comment(){
         return $this->belongsTo('App\task', 'id_task');
-      }
+    }
+    function user(){
+        return $this->belongsTo('App\User', 'id_user');
+    }
 }
