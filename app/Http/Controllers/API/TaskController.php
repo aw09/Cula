@@ -57,6 +57,7 @@ class TaskController extends Controller
     $i=0;
     foreach ($listComplete['user'] as $key) {
         $listComplete['user'][$i] = $key->user;
+        $listComplete['user'][$i]->userProfile;
         $i++;
     }
     $listComplete['link'] = $task->link;
@@ -64,6 +65,7 @@ class TaskController extends Controller
     $listComplete['comment'] = $task->comment;
     foreach ($listComplete['comment'] as $key) {
       $key->user;
+      $key->user->userProfile;
     }
     $listComplete['id_label'] = $listComplete->label;
 
