@@ -52,12 +52,17 @@ class TaskController extends Controller
    */
   public function show(Task $task)
   {
-    $listComplete = array();
     $listComplete = $task;
     $listComplete['user'] = $task->user;
+    $i=0;
+    foreach ($listComplete['user'] as $key) {
+        $listComplete['user'][$i] = $key->user;
+        $i++;
+    }
     $listComplete['link'] = $task->link;
     $listComplete['check_list'] = $task->checkList;
     $listComplete['comment'] = $task->comment;
+    $listComplete['id_label'] = $listComplete->label;
 
       if($listComplete == NULL){
           $error='Project not found';
