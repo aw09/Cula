@@ -76,15 +76,12 @@ class BoardController extends Controller
         }
         $key['ungroup'] = $temp;
         $board['card'] = $listComplete;
-        $listComplete[] = $key;
-        $collection = collect($board);
-        $collection->forget($board->grouping);
       }
       if($listCard == NULL){
           $error='Project not found';
           return response()->json($error, 404);
       } else {
-          return response()->json($collection, $this->successStatus);
+          return response()->json($board, 404);
       }
     }
 
