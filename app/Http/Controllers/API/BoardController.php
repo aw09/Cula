@@ -81,7 +81,7 @@ class BoardController extends Controller
           $error='Project not found';
           return response()->json($error, 404);
       } else {
-          return response()->json($board, 404);
+          return response()->json($board, $this->successStatus);
       }
     }
 
