@@ -67,6 +67,7 @@ class CardController extends Controller
     {
         $user = Auth::user();
         $task = $card->task;
+        $card->grouping;
         $card['task'] = $task;
         return response()->json($card, $this->successStatus);
     }
