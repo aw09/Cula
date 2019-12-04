@@ -7,19 +7,19 @@ use Mail;
 
 class EmailController extends Controller
 {
-  public function sendEmail()
+  public function sendEmail(Request $request)
   {
     try{
-        Mail::send('email', ['nama' => "nama"], function ($message)
+        Mail::send('email', ['nama' => $request->nama, 'pesan'=>$request->pesan], function ($message) use ($request)
         {
-            $message->subject("Judul");
-            $message->from('donotreply@kiddy.com', 'Kiddy');
-            $message->to("awagung9@gmail.com");
+            $message->subject($request->judul);
+            $message->from('noreply.cula@gmail.com', 'Cula Administrator');
+            $message->to($request->email);
         });
-        return response()->json("Success");
+        return TRUE;
     }
     catch (Exception $e){
-        return response()->json("Error", 401);
+        return FALSE;
     }
   }
 }

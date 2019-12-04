@@ -15,7 +15,7 @@
                         <tbody>
                             <tr style="margin:0;padding:0">
                                 <td style="margin:0;padding:0">
-                                    <img src="https://i.ibb.co/qx8GCq0/logo.png" style="width:270px;margin:0;padding:0" class="CToWUd">
+                                    <img src="https://i.ibb.co/ckDGCC6/Group-5.png" style="width:270px;margin:0;padding:0" class="CToWUd">
                                 </td>
                             </tr>
                         </tbody>
@@ -58,18 +58,16 @@
                             <tr style="margin:0;padding:0">
                                 <td style="margin:0;padding:0">
                                     <p style="font-weight:normal;font-size:14px;line-height:1.6;margin:0 0 20px;padding:0">
-                                        Hi Edy Ribowo,
+                                        Hai {{$nama}},
                                     </p>
 
                                     <p style="font-weight:normal;font-size:14px;line-height:1.6;margin:0 0 20px;padding:0">
-                                        Selamat datang di Page Cula.<br>
-                                        Kami dengan senang hati akan membantu Anda dalam membantu project management anda.<br>
-                                        Dengan penggunaan pendekatan metode Agile, Cula memberikan kenyamanan manajemen proyek anda, dan tepat waktu.<br><br><br>
+                                        {!! nl2br($pesan) !!}
                                         Salam Hangat,<br><br>
                                         <strong>Cula Team</strong>
                                     </p>
 
-                                    <a style="display:inline-block;text-decoration:none;color:#fff;background-color:#008aff;border-radius:30px;padding:14px 48px;height:24px" href="https://click.pstmrk.it/2s/member.inspigo.id%2Fverification%3Ftoken%3D5d207e598fe0715dcf96097e/sknFEQQ/CCkn/Xq5-b3k_uK" id="m_1439660099175330485join" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://click.pstmrk.it/2s/member.inspigo.id%252Fverification%253Ftoken%253D5d207e598fe0715dcf96097e/sknFEQQ/CCkn/Xq5-b3k_uK&amp;source=gmail&amp;ust=1574519991840000&amp;usg=AFQjCNHFOwfcnB158E9KA6PxNYpJn5qjnw">GO TO CULA PAGE</a>
+                                    <a style="display:inline-block;text-decoration:none;color:#fff;background-color:#008aff;border-radius:30px;padding:14px 48px;height:24px" href="https://click.pstmrk.it/2s/member.inspigo.id%2Fverification%3Ftoken%3D5d207e598fe0715dcf96097e/sknFEQQ/CCkn/Xq5-b3k_uK" id="m_1439660099175330485join" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://click.pstmrk.it/2s/member.inspigo.id%252Fverification%253Ftoken%253D5d207e598fe0715dcf96097e/sknFEQQ/CCkn/Xq5-b3k_uK&amp;source=gmail&amp;ust=1574519991840000&amp;usg=AFQjCNHFOwfcnB158E9KA6PxNYpJn5qjnw">CLICK HERE</a>
 
                                     <p style="font-weight:normal;font-size:14px;line-height:1.6;border-top-style:solid;border-top-color:#d0d0d0;border-top-width:3px;margin:40px 0 0;padding:10px 0 0">
                                         <small style="color:#999;margin:0;padding:0">

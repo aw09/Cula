@@ -43,6 +43,16 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);
         }
+        $req['judul'] = "Email Verification";
+        $req['nama'] = $request->name;
+        $req['email'] = $request->email;
+        $req['pesan'] = "Selamat datang di Page Cula.<br>
+        Kami dengan senang hati akan membantu Anda dalam membantu project management anda.<br>
+        Dengan penggunaan pendekatan metode Agile, Cula memberikan kenyamanan manajemen proyek anda, dan tepat waktu.<br>
+        Klik tombol dibawah untuk verifikasi email anda<br><br><br>";
+        $req = new Request($req);
+        if(!app('App\Http\Controllers\EmailController')->sendEmail($req))
+          return response()->json('Email wrong', 401);
         $input = $request->all();
         // dd($input);
         $input['password'] = bcrypt($input['password']);
