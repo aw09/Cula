@@ -57,7 +57,7 @@ class ProjectController extends Controller
           $error='Project not found';
           return response()->json($error, 404);
       } else {
-          return response()->json($listBoard, $this->successStatus);
+          return response()->json($project, $this->successStatus);
       }
     }
 
