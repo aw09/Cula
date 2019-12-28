@@ -9,7 +9,7 @@ class CheckList extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'id','id_task','check_list','due_date',
+        'id','id_task','check_list','due_date', 'checked'
     ];
 
     function checkList(){
