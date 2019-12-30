@@ -98,8 +98,14 @@ class CheckListController extends Controller
 
         }
 
+<<<<<<< HEAD
         $checklist->update($request->all());
         return response()->json($checklist, $this->successStatus);
+=======
+        $checkList->update($request->all());
+        $success =  $request->all();
+        return response()->json(['success'=>$success], $this->successStatus);
+>>>>>>> 1e64aea565956b3c6a330270e362e8edcfe2106b
     }
 
     /**

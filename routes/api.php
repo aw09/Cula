@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('task/member/delete', 'API\TaskController@deleteMember');
     Route::get('myTask', 'API\TaskController@myTask'); //Roadmap
     Route::get('myUrgentTask', 'API\TaskController@myUrgentTask'); //Reminder
+    Route::post('search', 'API\TaskController@search');
 
     //BoardController
     Route::resource('board', 'API\BoardController');

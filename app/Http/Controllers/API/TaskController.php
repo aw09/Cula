@@ -10,6 +10,7 @@ use DateTime;
 use App\member_of_task;
 use App\Task;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -206,5 +207,23 @@ class TaskController extends Controller
     }
 
     return response()->json($listTask, $this->successStatus);
+  }
+
+  public function search(Request $request){
+    $user = Auth::user();
+    $validator = Validator::make($request->all(), [
+        'search' => 'required',
+    ]);
+    if ($validator->fails()) {
+        return response()->json(['error'=>$validator->errors()], 401);
+    }
+
+    $result = DB::table('tasks')
+                     ->where('task', 'like', '%$request->search%')
+                     ->get();
+    
+    
+    return response()->json($result, $this->successStatus);
+    
   }
 }

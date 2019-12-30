@@ -139,4 +139,8 @@ class UserController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
+
+    
+
+
 }
