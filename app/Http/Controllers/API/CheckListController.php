@@ -106,7 +106,7 @@ class CheckListController extends Controller
         }
 
         $checkList->update($request->all());
-        $success =  $checkList;
+        $success =  $request->all();
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
