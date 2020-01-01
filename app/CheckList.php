@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CheckList extends Model
 {
     use SoftDeletes;
+
+    protected $table = 'checklists';
+
     protected $fillable = [
-        'id','id_task','check_list','due_date', 'checked'
+        'id_task','check_list','due_date', 'checked'
     ];
 
     function checkList(){

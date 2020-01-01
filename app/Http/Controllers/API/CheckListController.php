@@ -15,18 +15,10 @@ class CheckListController extends Controller
      * @return \Illuminate\Http\Response
      */
     public $successStatus = 200;
-    public function index(Request $request)
+    public function index()
     {
-        $validator = Validator::make($request->all(),[
-            'id_task' => 'required',
-        ]);
+        $listChecklist=CheckList::all();
 
-        if($validator->fails()){
-            return response()->json(['error'=>'error']);
-        }
-
-        $listChecklist=CheckList::where('id_task', $request['id_task'])->get();
-                                    
         return response()->json($listChecklist, $this->successStatus);
     }
 
@@ -37,7 +29,7 @@ class CheckListController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -71,9 +63,10 @@ class CheckListController extends Controller
      * @param  \App\CheckList  $checkList
      * @return \Illuminate\Http\Response
      */
-    public function show(CheckList $checkList)
+    public function show(CheckList $checklist)
     {
-        return response()->json(['success'=>$checkList], $this->successStatus);
+        $success = $checklist;
+        return response()->json(['success'=>$success], $this->successStatus);
     }
 
     /**
@@ -82,7 +75,7 @@ class CheckListController extends Controller
      * @param  \App\CheckList  $checkList
      * @return \Illuminate\Http\Response
      */
-    public function edit(CheckList $checkList)
+    public function edit(CheckList $checklist)
     {
         //
     }
@@ -94,19 +87,20 @@ class CheckListController extends Controller
      * @param  \App\CheckList  $checkList
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CheckList $checkList)
+    public function update(Request $request, CheckList $checklist)
     {
+
         $validator = Validator::make($request->all(),[
-            'id_task' => 'required',
             'check_list' => 'required',
         ]);
 
         if($validator->fails()){
-            return response()->json(['error'=>'error']);
+            return response()->json(['error'=>$validator->errors()], 401);
+
         }
 
-        $checkList->update($request->all());
-        $success =  $request->all();
+        $checklist->update($request->all());
+        $success = $checklist;
         return response()->json(['success'=>$success], $this->successStatus);
     }
 
@@ -134,7 +128,7 @@ class CheckListController extends Controller
         }
 
         $listChecklist=CheckList::where('id_task', $request['id_task'])->get();
-                                    
+
         return response()->json($listChecklist, $this->successStatus);
     }
 }
