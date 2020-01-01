@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Link;
 use App\Http\Controllers\Controller;
 use Validator;
+use Auth;
 
 class LinkController extends Controller
 {
